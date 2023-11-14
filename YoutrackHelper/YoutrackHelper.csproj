@@ -15,4 +15,7 @@
     <ItemGroup>
         <ProjectReference Include="..\ProjectListModule\ProjectListModule.csproj"/>
     </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Models\"/>
+    </ItemGroup>
 </Project>
