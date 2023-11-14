@@ -12,9 +12,6 @@
     xmlns:viewModels="clr-namespace:ProjectListModule.ViewModels"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid>
-        <TextBlock
-            HorizontalAlignment="Center"
-            Text="{Binding Message}"
-            VerticalAlignment="Center" />
+        <ListView ItemsSource="{Binding Projects}" />
     </Grid>
 </UserControl>

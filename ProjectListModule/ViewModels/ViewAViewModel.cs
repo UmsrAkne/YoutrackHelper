@@ -1,16 +1,12 @@
-﻿using Prism.Mvvm;
+﻿using System.Collections.Generic;
+using Prism.Mvvm;
+using YouTrackSharp.Projects;
 
 namespace ProjectListModule.ViewModels
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class ViewAViewModel : BindableBase
     {
-        private string _message;
-
-        public string Message { get => _message; set => SetProperty(ref _message, value); }
-
-        public ViewAViewModel()
-        {
-            Message = "View A from your Prism Module";
-        }
+        public List<Project> Projects { get; set; }
     }
 }
