@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using YouTrackSharp;
 using YouTrackSharp.Projects;
 
-namespace YoutrackHelper.Models
+namespace ProjectListModule.Models
 {
     public class Connector
     {
@@ -19,7 +19,7 @@ namespace YoutrackHelper.Models
 
         private BearerTokenConnection Connection { get; set; }
 
-        private async Task LoadProjects()
+        public async Task LoadProjects()
         {
             try
             {

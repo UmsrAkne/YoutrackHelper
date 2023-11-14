@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using Prism.Ioc;
+using Prism.Modularity;
+using ProjectListModule;
 using YoutrackHelper.Views;
 
 namespace YoutrackHelper
@@ -16,6 +18,11 @@ namespace YoutrackHelper
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            moduleCatalog.AddModule<ProjectListModuleModule>(InitializationMode.WhenAvailable);
         }
     }
 }
