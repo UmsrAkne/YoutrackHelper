@@ -22,7 +22,7 @@ namespace YoutrackHelper
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<ProjectListModuleModule>(InitializationMode.WhenAvailable);
+            moduleCatalog.AddModule<ProjectListModuleModule>();
         }
     }
 }

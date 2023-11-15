@@ -17,6 +17,8 @@ namespace ProjectListModule.Models
 
         public List<Project> Projects { get; private set; }
 
+        public string ErrorMessage { get; private set; } = string.Empty;
+
         private BearerTokenConnection Connection { get; set; }
 
         public async Task LoadProjects()
@@ -30,7 +32,7 @@ namespace ProjectListModule.Models
             catch (Exception e)
             {
                 Debug.WriteLine($"{e}(Connector : 46)");
-                throw;
+                ErrorMessage = "接続に失敗しました";
             }
         }
     }
