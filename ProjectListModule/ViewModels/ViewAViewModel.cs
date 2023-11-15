@@ -12,8 +12,11 @@ namespace ProjectListModule.ViewModels
     public class ViewAViewModel : BindableBase
     {
         private List<Project> projects;
+        private string message = string.Empty;
 
         public List<Project> Projects { get => projects; private set => SetProperty(ref projects, value); }
+
+        public string Message { get => message; private set => SetProperty(ref message, value); }
 
         public ViewAViewModel()
         {
@@ -33,6 +36,7 @@ namespace ProjectListModule.ViewModels
             var connector = new Connector(uri, perm);
             await connector.LoadProjects();
             Projects = connector.Projects;
+            Message = connector.ErrorMessage;
         }
     }
 }
