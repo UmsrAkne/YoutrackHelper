@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using ProjectListModule.Models;
 using YouTrackSharp.Projects;
 
@@ -13,13 +15,16 @@ namespace ProjectListModule.ViewModels
     {
         private List<Project> projects;
         private string message = string.Empty;
+        private readonly IRegionManager regionManager;
 
         public List<Project> Projects { get => projects; private set => SetProperty(ref projects, value); }
 
         public string Message { get => message; private set => SetProperty(ref message, value); }
 
-        public ViewAViewModel()
+        public ViewAViewModel(IRegionManager regionManager)
         {
+            this.regionManager = regionManager;
+
             var uri = File.ReadAllText(
                     $@"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\youtrackInfo\uri.txt")
                 .Replace("\n", "");
@@ -30,6 +35,12 @@ namespace ProjectListModule.ViewModels
 
             _ = GetProjectsAsync(uri, perm);
         }
+
+        public DelegateCommand ShowIssueListViewCommand => new (() =>
+        {
+            var param = new NavigationParameters { { "ProjectName", "testLabel" }, };
+            regionManager.RequestNavigate("ContentRegion", "IssueListView", param);
+        });
 
         private async Task GetProjectsAsync(string uri, string perm)
         {
