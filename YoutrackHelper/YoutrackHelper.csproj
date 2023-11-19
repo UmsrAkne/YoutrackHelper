@@ -18,4 +18,11 @@
     <ItemGroup>
         <Folder Include="Models\"/>
     </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\ProjectListView.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+    </ItemGroup>
 </Project>

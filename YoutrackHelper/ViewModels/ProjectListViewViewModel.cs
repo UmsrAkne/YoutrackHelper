@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using ProjectListModule.Models;
+using YoutrackHelper.Models;
 using YouTrackSharp.Projects;
 
-namespace ProjectListModule.ViewModels
+namespace YoutrackHelper.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public class ProjectListViewViewModel : BindableBase
