@@ -21,7 +21,7 @@ namespace YoutrackHelper
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
+            containerRegistry.RegisterForNavigation<ProjectListView, ProjectListViewViewModel>();
             containerRegistry.RegisterForNavigation<IssueListView, IssueListViewViewModel>();
         }
 

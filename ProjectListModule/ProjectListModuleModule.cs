@@ -10,7 +10,7 @@ namespace ProjectListModule
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionMan = containerProvider.Resolve<IRegionManager>();
-            regionMan.RegisterViewWithRegion("ContentRegion", typeof(ViewA));
+            regionMan.RegisterViewWithRegion("ContentRegion", typeof(ProjectListView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

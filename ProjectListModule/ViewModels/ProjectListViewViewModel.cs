@@ -11,7 +11,7 @@ using YouTrackSharp.Projects;
 namespace ProjectListModule.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class ViewAViewModel : BindableBase
+    public class ProjectListViewViewModel : BindableBase
     {
         private List<Project> projects;
         private string message = string.Empty;
@@ -21,7 +21,7 @@ namespace ProjectListModule.ViewModels
 
         public string Message { get => message; private set => SetProperty(ref message, value); }
 
-        public ViewAViewModel(IRegionManager regionManager)
+        public ProjectListViewViewModel(IRegionManager regionManager)
         {
             this.regionManager = regionManager;
 

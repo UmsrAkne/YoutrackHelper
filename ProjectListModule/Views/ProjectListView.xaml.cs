@@ -18,9 +18,9 @@ namespace ProjectListModule.Views
     /// <summary>
     /// Interaction logic for ViewA.xaml
     /// </summary>
-    public partial class ViewA : UserControl
+    public partial class ProjectListView : UserControl
     {
-        public ViewA()
+        public ProjectListView()
         {
             InitializeComponent();
         }
