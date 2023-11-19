@@ -13,13 +13,9 @@ namespace YoutrackHelper.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class ProjectListViewViewModel : BindableBase
     {
+        private readonly IRegionManager regionManager;
         private List<Project> projects;
         private string message = string.Empty;
-        private readonly IRegionManager regionManager;
-
-        public List<Project> Projects { get => projects; private set => SetProperty(ref projects, value); }
-
-        public string Message { get => message; private set => SetProperty(ref message, value); }
 
         public ProjectListViewViewModel(IRegionManager regionManager)
         {
@@ -27,14 +23,18 @@ namespace YoutrackHelper.ViewModels
 
             var uri = File.ReadAllText(
                     $@"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\youtrackInfo\uri.txt")
-                .Replace("\n", "");
+                .Replace("\n", string.Empty);
 
             var perm = File.ReadAllText(
                     $@"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\youtrackInfo\perm.txt")
-                .Replace("\n", "");
+                .Replace("\n", string.Empty);
 
             _ = GetProjectsAsync(uri, perm);
         }
+
+        public List<Project> Projects { get => projects; private set => SetProperty(ref projects, value); }
+
+        public string Message { get => message; private set => SetProperty(ref message, value); }
 
         public DelegateCommand ShowIssueListViewCommand => new (() =>
         {

@@ -5,6 +5,7 @@ using YoutrackHelper.Views;
 
 namespace YoutrackHelper
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class YoutrackHelperModule : IModule
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
