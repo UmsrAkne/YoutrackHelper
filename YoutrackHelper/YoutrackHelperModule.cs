@@ -14,7 +14,7 @@ namespace YoutrackHelper
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionMan = containerProvider.Resolve<IRegionManager>();
-            regionMan.RegisterViewWithRegion("ContentRegion", typeof(IssueListView));
+            regionMan.RegisterViewWithRegion("ContentRegion", typeof(ProjectListView));
         }
     }
 }
