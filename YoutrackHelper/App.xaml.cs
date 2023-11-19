@@ -1,9 +1,6 @@
 ﻿using System.Windows;
 using Prism.Ioc;
 using Prism.Modularity;
-using ProjectListModule;
-using ProjectListModule.ViewModels;
-using ProjectListModule.Views;
 using YoutrackHelper.ViewModels;
 using YoutrackHelper.Views;
 
@@ -21,13 +18,12 @@ namespace YoutrackHelper
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
+            containerRegistry.RegisterForNavigation<ProjectListView, ProjectListViewViewModel>();
             containerRegistry.RegisterForNavigation<IssueListView, IssueListViewViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<ProjectListModuleModule>();
             moduleCatalog.AddModule<YoutrackHelperModule>();
         }
     }
