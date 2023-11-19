@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace ProjectListModule.Views
+﻿namespace YoutrackHelper.Views
 {
     /// <summary>
     ///     Interaction logic for ViewA.xaml
     /// </summary>
-    public partial class ProjectListView : UserControl
+    public partial class ProjectListView
     {
         public ProjectListView()
         {

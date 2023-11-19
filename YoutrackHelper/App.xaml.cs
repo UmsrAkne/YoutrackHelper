@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using Prism.Ioc;
 using Prism.Modularity;
-using ProjectListModule.Views;
 using YoutrackHelper.ViewModels;
 using YoutrackHelper.Views;
 
