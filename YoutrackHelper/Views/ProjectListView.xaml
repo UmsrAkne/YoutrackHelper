@@ -7,6 +7,7 @@
     x:Class="YoutrackHelper.Views.ProjectListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:projects="clr-namespace:YouTrackSharp.Projects;assembly=YouTrackSharp"
@@ -21,7 +22,16 @@
         <ListView Grid.Row="0" ItemsSource="{Binding Projects}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type projects:Project}">
-                    <TextBlock Text="{Binding Name}" />
+                    <ContentControl>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ShowIssueListViewCommand}"
+                                    CommandParameter="{Binding}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="{Binding Name}" />
+                    </ContentControl>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

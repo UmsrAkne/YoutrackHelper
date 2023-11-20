@@ -1,16 +1,17 @@
 using Prism.Mvvm;
 using Prism.Regions;
+using YouTrackSharp.Projects;
 
 namespace YoutrackHelper.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public class IssueListViewViewModel : BindableBase, INavigationAware
     {
-        public string ProjectName { get; set; }
+        public Project Project { get; set; }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            // Message = navigationContext.Parameters.GetValue<string>(nameof(ProjectName));
+            Project = navigationContext.Parameters.GetValue<Project>(nameof(Project));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
