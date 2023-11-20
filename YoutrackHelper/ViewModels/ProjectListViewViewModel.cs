@@ -34,6 +34,8 @@ namespace YoutrackHelper.ViewModels
 
         public List<Project> Projects { get => projects; private set => SetProperty(ref projects, value); }
 
+        public Connector Connector { get; set; }
+
         public string Message { get => message; private set => SetProperty(ref message, value); }
 
         public DelegateCommand<Project> ShowIssueListViewCommand => new ((p) =>
@@ -43,16 +45,21 @@ namespace YoutrackHelper.ViewModels
                 return;
             }
 
-            var param = new NavigationParameters { { nameof(Project), p }, };
+            var param = new NavigationParameters
+            {
+                { nameof(Project), p },
+                { nameof(Connector), Connector },
+            };
+
             regionManager.RequestNavigate("ContentRegion", "IssueListView", param);
         });
 
         private async Task GetProjectsAsync(string uri, string perm)
         {
-            var connector = new Connector(uri, perm);
-            await connector.LoadProjects();
-            Projects = connector.Projects;
-            Message = connector.ErrorMessage;
+            Connector = new Connector(uri, perm);
+            await Connector.LoadProjects();
+            Projects = Connector.Projects;
+            Message = Connector.ErrorMessage;
         }
     }
 }

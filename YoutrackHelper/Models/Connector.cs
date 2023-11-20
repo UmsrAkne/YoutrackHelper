@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using YouTrackSharp;
+using YouTrackSharp.Issues;
 using YouTrackSharp.Projects;
 
 namespace YoutrackHelper.Models
@@ -16,6 +17,8 @@ namespace YoutrackHelper.Models
         }
 
         public List<Project> Projects { get; private set; }
+
+        public List<Issue> Issues { get; set; }
 
         public string ErrorMessage { get; private set; } = string.Empty;
 
@@ -32,6 +35,21 @@ namespace YoutrackHelper.Models
             catch (Exception e)
             {
                 Debug.WriteLine($"{e}(Connector : 46)");
+                ErrorMessage = "接続に失敗しました";
+            }
+        }
+
+        public async Task LoadIssues(string shortName)
+        {
+            try
+            {
+                var issuesService = Connection.CreateIssuesService();
+                var issues = await issuesService.GetIssuesInProject(shortName);
+                Issues = issues.ToList();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"{e}(Connector : 52)");
                 ErrorMessage = "接続に失敗しました";
             }
         }
