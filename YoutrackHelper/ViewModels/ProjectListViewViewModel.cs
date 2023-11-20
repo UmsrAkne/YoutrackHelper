@@ -36,9 +36,14 @@ namespace YoutrackHelper.ViewModels
 
         public string Message { get => message; private set => SetProperty(ref message, value); }
 
-        public DelegateCommand ShowIssueListViewCommand => new (() =>
+        public DelegateCommand<Project> ShowIssueListViewCommand => new ((p) =>
         {
-            var param = new NavigationParameters { { "ProjectName", "testLabel" }, };
+            if (p == null)
+            {
+                return;
+            }
+
+            var param = new NavigationParameters { { nameof(Project), p }, };
             regionManager.RequestNavigate("ContentRegion", "IssueListView", param);
         });
 
