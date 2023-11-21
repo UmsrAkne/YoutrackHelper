@@ -17,13 +17,13 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="80" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="{Binding Title}" />
-                        <TextBlock Grid.Column="1" Text="{Binding CreatedAt}" />
+                        <TextBlock Grid.Column="1" Text="{Binding Status}" />
+                        <TextBlock Grid.Column="2" Text="{Binding CreatedAt}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 using Prism.Mvvm;
 using YouTrackSharp.Issues;
 
@@ -8,6 +9,7 @@ namespace YoutrackHelper.Models
     public class IssueWrapper : BindableBase, IIssue
     {
         private DateTime createdAt;
+        private string status;
 
         public IssueWrapper(Issue issue)
         {
@@ -41,7 +43,21 @@ namespace YoutrackHelper.Models
 
         public bool Completed { get; set; }
 
-        public string Status { get; set; }
+        public string Status
+        {
+            get
+            {
+                var f = Issue.Fields.FirstOrDefault(f => f.Name == "State");
+                if (f != null)
+                {
+                    var token = ((JArray)f.ValueId)[0];
+                    return token.ToString();
+                }
+
+                return status;
+            }
+            set => SetProperty(ref status, value);
+        }
 
         private Issue Issue { get; set; }
     }
