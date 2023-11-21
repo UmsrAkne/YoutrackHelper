@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Prism.Mvvm;
 using Prism.Regions;
 using YoutrackHelper.Models;
-using YouTrackSharp.Issues;
 using YouTrackSharp.Projects;
 
 namespace YoutrackHelper.ViewModels
@@ -11,13 +10,13 @@ namespace YoutrackHelper.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class IssueListViewViewModel : BindableBase, INavigationAware
     {
-        private List<Issue> issues;
+        private List<IIssue> issues;
 
         public Project Project { get; set; }
 
         public Connector Connector { get; set; }
 
-        public List<Issue> Issues { get => issues; set => SetProperty(ref issues, value); }
+        public List<IIssue> IssueWrappers { get => issues; set => SetProperty(ref issues, value); }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
@@ -38,7 +37,7 @@ namespace YoutrackHelper.ViewModels
         private async Task GetIssuesAsync()
         {
             await Connector.LoadIssues(Project.ShortName);
-            Issues = Connector.Issues;
+            IssueWrappers = Connector.IssueWrappers;
             // Message = Connector.ErrorMessage;
         }
     }

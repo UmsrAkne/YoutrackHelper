@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using YouTrackSharp;
-using YouTrackSharp.Issues;
 using YouTrackSharp.Projects;
 
 namespace YoutrackHelper.Models
@@ -18,7 +17,7 @@ namespace YoutrackHelper.Models
 
         public List<Project> Projects { get; private set; }
 
-        public List<Issue> Issues { get; set; }
+        public List<IIssue> IssueWrappers { get; set; }
 
         public string ErrorMessage { get; private set; } = string.Empty;
 
@@ -45,7 +44,7 @@ namespace YoutrackHelper.Models
             {
                 var issuesService = Connection.CreateIssuesService();
                 var issues = await issuesService.GetIssuesInProject(shortName);
-                Issues = issues.ToList();
+                IssueWrappers = issues.Select(i => (IIssue)new IssueWrapper(i)).ToList();
             }
             catch (Exception e)
             {
