@@ -10,6 +10,7 @@ namespace YoutrackHelper.Models
     {
         private DateTime createdAt;
         private string status;
+        private bool completed;
 
         public IssueWrapper(Issue issue)
         {
@@ -41,7 +42,7 @@ namespace YoutrackHelper.Models
             set => createdAt = value;
         }
 
-        public bool Completed { get; set; }
+        public bool Completed { get => completed; set => SetProperty(ref completed, value); }
 
         public string Status
         {
@@ -51,7 +52,9 @@ namespace YoutrackHelper.Models
                 if (f != null)
                 {
                     var token = ((JArray)f.ValueId)[0];
-                    return token.ToString();
+                    var str = token.ToString();
+                    Completed = str == "完了";
+                    return str;
                 }
 
                 return status;
