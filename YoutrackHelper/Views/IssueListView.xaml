@@ -1,7 +1,6 @@
 <UserControl
     d:DataContext="{d:DesignInstance viewModels:IssueListViewViewModel}"
     d:DesignHeight="300"
-    d:DesignWidth="300"
     mc:Ignorable="d"
     x:Class="YoutrackHelper.Views.IssueListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -21,12 +20,16 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="60" />
                             <ColumnDefinition Width="80" />
-                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="{Binding Title}" />
-                        <TextBlock Grid.Column="1" Text="{Binding Status}" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="4,0"
+                            Text="{Binding Status}" />
                         <TextBlock Grid.Column="2" Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
                     </Grid>
                 </DataTemplate>
