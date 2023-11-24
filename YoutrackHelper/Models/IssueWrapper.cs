@@ -19,6 +19,11 @@ namespace YoutrackHelper.Models
             if (Issue != null)
             {
                 ShortName = Issue.Id;
+                var f = Issue.Fields.FirstOrDefault(f => f.Name == "State");
+                if (f != null)
+                {
+                    Completed = ((JArray)f.ValueId)[0].ToString() == "完了";
+                }
             }
         }
 

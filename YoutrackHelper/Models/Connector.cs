@@ -44,7 +44,11 @@ namespace YoutrackHelper.Models
             {
                 var issuesService = Connection.CreateIssuesService();
                 var issues = await issuesService.GetIssuesInProject(shortName);
-                IssueWrappers = issues.Select(i => (IIssue)new IssueWrapper(i)).ToList();
+                IssueWrappers = issues
+                    .Select(i => (IIssue)new IssueWrapper(i))
+                    .OrderBy(i => i.Completed)
+                    .ThenByDescending(i => i.ShortName)
+                    .ToList();
             }
             catch (Exception e)
             {
