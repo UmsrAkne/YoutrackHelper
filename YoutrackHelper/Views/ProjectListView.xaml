@@ -19,15 +19,18 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="0" ItemsSource="{Binding Projects}">
+        <ListView
+            Grid.Row="0"
+            ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
+            ItemsSource="{Binding Projects}"
+            Style="{StaticResource ListViewStyle}">
+
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type projects:Project}">
                     <ContentControl>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction
-                                    Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ShowIssueListViewCommand}"
-                                    CommandParameter="{Binding}" />
+                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ShowIssueListViewCommand}" CommandParameter="{Binding}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <TextBlock Text="{Binding Name}" />

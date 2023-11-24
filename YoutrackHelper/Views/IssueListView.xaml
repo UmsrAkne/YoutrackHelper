@@ -14,7 +14,11 @@
     </UserControl.Resources>
 
     <Grid>
-        <ListView ItemsSource="{Binding IssueWrappers}">
+        <ListView
+            ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
+            ItemsSource="{Binding IssueWrappers}"
+            Style="{StaticResource ListViewStyle}">
+
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:IIssue}">
                     <Grid>
