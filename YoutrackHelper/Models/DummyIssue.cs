@@ -11,5 +11,7 @@ namespace YoutrackHelper.Models
         public bool Completed { get; set; }
 
         public string Status { get; set; } = "未完了";
+
+        public string ShortName { get; set; } = string.Empty;
     }
 }
