@@ -11,10 +11,15 @@ namespace YoutrackHelper.Models
         private DateTime createdAt;
         private string status;
         private bool completed;
+        private string shortName = string.Empty;
 
         public IssueWrapper(Issue issue)
         {
             Issue = issue;
+            if (Issue != null)
+            {
+                ShortName = Issue.Id;
+            }
         }
 
         public string Title
@@ -61,6 +66,8 @@ namespace YoutrackHelper.Models
             }
             set => SetProperty(ref status, value);
         }
+
+        public string ShortName { get => shortName; set => SetProperty(ref shortName, value); }
 
         private Issue Issue { get; set; }
     }

@@ -1,7 +1,7 @@
 ﻿<Window
     Height="350"
     Title="{Binding Title}"
-    Width="525"
+    Width="800"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     mc:Ignorable="d"
     prism:ViewModelLocator.AutoWireViewModel="True"

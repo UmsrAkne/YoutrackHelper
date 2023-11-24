@@ -32,6 +32,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="300" />
                             <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="60" />
                             <ColumnDefinition Width="80" />
                         </Grid.ColumnDefinitions>
 
@@ -57,9 +58,14 @@
                         <TextBlock
                             Grid.Column="2"
                             Margin="4,0"
+                            Text="{Binding ShortName}" />
+
+                        <TextBlock
+                            Grid.Column="3"
+                            Margin="2,0"
                             Text="{Binding Status}" />
 
-                        <TextBlock Grid.Column="3" Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
+                        <TextBlock Grid.Column="4" Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
