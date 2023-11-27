@@ -18,6 +18,11 @@ namespace YoutrackHelper.ViewModels
 
         public List<IIssue> IssueWrappers { get => issues; set => SetProperty(ref issues, value); }
 
+        public DelegateCommand<IIssue> CompleteIssueCommand => new ((param) =>
+        {
+            _ = Connector.ApplyCommand(param.ShortName, "state 完了", string.Empty);
+        });
+
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Project = navigationContext.Parameters.GetValue<Project>(nameof(Project));
