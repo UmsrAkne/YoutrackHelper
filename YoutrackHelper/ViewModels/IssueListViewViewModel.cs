@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -11,13 +12,13 @@ namespace YoutrackHelper.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class IssueListViewViewModel : BindableBase, INavigationAware
     {
-        private List<IIssue> issues;
+        private ObservableCollection<IIssue> issues;
 
         public Project Project { get; set; }
 
         public Connector Connector { get; set; }
 
-        public List<IIssue> IssueWrappers { get => issues; set => SetProperty(ref issues, value); }
+        public ObservableCollection<IIssue> IssueWrappers { get => issues; set => SetProperty(ref issues, value); }
 
         public DelegateCommand<IIssue> CompleteIssueCommand => new ((param) =>
         {
@@ -43,7 +44,7 @@ namespace YoutrackHelper.ViewModels
         private async Task GetIssuesAsync()
         {
             await Connector.LoadIssues(Project.ShortName);
-            IssueWrappers = Connector.IssueWrappers;
+            IssueWrappers = new ObservableCollection<IIssue>(Connector.IssueWrappers);
             // Message = Connector.ErrorMessage;
         }
     }
