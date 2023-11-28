@@ -44,7 +44,10 @@ namespace YoutrackHelper.Models
                 var c = Issue.Fields.FirstOrDefault(f => f.Name == "created");
                 if (c != null)
                 {
-                    return new DateTime((long)c.Value);
+                    var tz = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
+                    return TimeZoneInfo
+                        .ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds((long)c.Value), tz)
+                        .DateTime;
                 }
 
                 return createdAt;
