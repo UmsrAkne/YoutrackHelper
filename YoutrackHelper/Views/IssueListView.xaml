@@ -94,6 +94,31 @@
                                             <Setter Property="IsChecked" Value="False" />
                                         </DataTrigger>
                                     </Style.Triggers>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ToggleButton">
+                                                <Border
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="5">
+                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center" />
+                                                </Border>
+
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter Property="Background" Value="PowderBlue" />
+                                                    </Trigger>
+
+                                                    <Trigger Property="IsChecked" Value="False">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
                                 </Style>
                             </ToggleButton.Style>
                             <TextBlock Text="{Binding Status}" />
