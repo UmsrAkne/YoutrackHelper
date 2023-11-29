@@ -41,5 +41,10 @@ namespace YoutrackHelper.Models
             trackingTimeDictionary.Remove(trackingName);
             return result;
         }
+
+        public bool IsTrackingNameRegistered(string trackingName)
+        {
+            return trackingTimeDictionary.ContainsKey(trackingName);
+        }
     }
 }
