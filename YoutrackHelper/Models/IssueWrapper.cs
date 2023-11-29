@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using Prism.Commands;
 using Prism.Mvvm;
 using YouTrackSharp.Issues;
 
@@ -13,6 +14,7 @@ namespace YoutrackHelper.Models
         private string status;
         private bool completed;
         private string shortName = string.Empty;
+        private bool expanded;
 
         public IssueWrapper(Issue issue)
         {
@@ -81,6 +83,13 @@ namespace YoutrackHelper.Models
         public string ShortName { get => shortName; set => SetProperty(ref shortName, value); }
 
         public List<Comment> Comments { get; set; } = new ();
+
+        public bool Expanded { get => expanded; set => SetProperty(ref expanded, value); }
+
+        public DelegateCommand ChangeVisibilityCommand => new (() =>
+        {
+            Expanded = !Expanded;
+        });
 
         private Issue Issue { get; set; }
     }

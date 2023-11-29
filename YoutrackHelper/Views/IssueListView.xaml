@@ -23,135 +23,156 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:IIssue}">
-                    <StackPanel>
-                        <Grid>
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Completed}" Value="True">
-                                            <Setter Property="Opacity" Value="0.3" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="60" />
-                                <ColumnDefinition Width="60" />
-                                <ColumnDefinition Width="80" />
-                            </Grid.ColumnDefinitions>
-
-                            <CheckBox
-                                Grid.Column="0"
-                                IsChecked="{Binding Completed}"
-                                Margin="0,1,4,0"
-                                VerticalAlignment="Center">
-
-                                <CheckBox.Style>
-                                    <Style TargetType="CheckBox">
+                    <ContentControl>
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseDoubleClick">
+                                <b:InvokeCommandAction Command="{Binding ChangeVisibilityCommand}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <StackPanel>
+                            <Grid>
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Completed}" Value="True">
-                                                <Setter Property="IsEnabled" Value="False" />
+                                                <Setter Property="Opacity" Value="0.3" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </CheckBox.Style>
+                                </Grid.Style>
 
-                                <b:Interaction.Triggers>
-                                    <b:EventTrigger EventName="Checked">
-                                        <b:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.CompleteIssueCommand}" CommandParameter="{Binding}" />
-                                    </b:EventTrigger>
-                                </b:Interaction.Triggers>
-                            </CheckBox>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="300" />
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="1" Text="{Binding Title}" />
+                                <CheckBox
+                                    Grid.Column="0"
+                                    IsChecked="{Binding Completed}"
+                                    Margin="0,1,4,0"
+                                    VerticalAlignment="Center">
 
-                            <TextBlock
-                                Grid.Column="2"
-                                Margin="4,0"
-                                Text="{Binding ShortName}" />
+                                    <CheckBox.Style>
+                                        <Style TargetType="CheckBox">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Completed}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </CheckBox.Style>
 
-                            <ToggleButton
-                                Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ChangeStatusCommand}"
-                                CommandParameter="{Binding}"
-                                Grid.Column="3"
-                                Margin="4,0">
-                                <ToggleButton.Style>
-                                    <Style TargetType="ToggleButton">
+                                    <b:Interaction.Triggers>
+                                        <b:EventTrigger EventName="Checked">
+                                            <b:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.CompleteIssueCommand}" CommandParameter="{Binding}" />
+                                        </b:EventTrigger>
+                                    </b:Interaction.Triggers>
+                                </CheckBox>
+
+                                <TextBlock Grid.Column="1" Text="{Binding Title}" />
+
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Margin="4,0"
+                                    Text="{Binding ShortName}" />
+
+                                <ToggleButton
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ChangeStatusCommand}"
+                                    CommandParameter="{Binding}"
+                                    Grid.Column="3"
+                                    Margin="4,0">
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="未完了">
+                                                    <Setter Property="IsChecked" Value="False" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding Status}" Value="作業中">
+                                                    <Setter Property="IsChecked" Value="True" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding Completed}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                    <Setter Property="IsChecked" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ToggleButton">
+                                                        <Border
+                                                            Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            CornerRadius="5">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        </Border>
+
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Background" Value="PowderBlue" />
+                                                            </Trigger>
+
+                                                            <Trigger Property="IsChecked" Value="False">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                    <TextBlock Text="{Binding Status}" />
+                                </ToggleButton>
+
+                                <TextBlock Grid.Column="4" Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
+                            </Grid>
+
+                            <ListView
+                                Background="Transparent"
+                                BorderThickness="0"
+                                HorizontalContentAlignment="Stretch"
+                                ItemsSource="{Binding Comments}"
+                                Margin="25,0,0,0">
+
+                                <ListView.Style>
+                                    <Style TargetType="ListView">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Status}" Value="未完了">
-                                                <Setter Property="IsChecked" Value="False" />
+                                            <DataTrigger Binding="{Binding Expanded}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed" />
                                             </DataTrigger>
 
-                                            <DataTrigger Binding="{Binding Status}" Value="作業中">
-                                                <Setter Property="IsChecked" Value="True" />
-                                            </DataTrigger>
-
-                                            <DataTrigger Binding="{Binding Completed}" Value="True">
-                                                <Setter Property="IsEnabled" Value="False" />
-                                                <Setter Property="IsChecked" Value="False" />
+                                            <DataTrigger Binding="{Binding Expanded}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
                                         </Style.Triggers>
-
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ToggleButton">
-                                                    <Border
-                                                        Background="{TemplateBinding Background}"
-                                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                                        CornerRadius="5">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                    </Border>
-
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsChecked" Value="True">
-                                                            <Setter Property="Background" Value="PowderBlue" />
-                                                        </Trigger>
-
-                                                        <Trigger Property="IsChecked" Value="False">
-                                                            <Setter Property="Background" Value="Transparent" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
                                     </Style>
-                                </ToggleButton.Style>
-                                <TextBlock Text="{Binding Status}" />
-                            </ToggleButton>
+                                </ListView.Style>
 
-                            <TextBlock Grid.Column="4" Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
-                        </Grid>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type issues:Comment}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
 
-                        <ListView
-                            Background="Transparent"
-                            BorderThickness="0"
-                            HorizontalContentAlignment="Stretch"
-                            ItemsSource="{Binding Comments}"
-                            Margin="25,0,0,0">
+                                            <TextBlock Grid.Column="0" Text="{Binding Text}" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                HorizontalAlignment="Right"
+                                                Text="{Binding Created, Converter={StaticResource DateTimeConverter}}" />
+                                        </Grid>
 
-                            <ListView.ItemTemplate>
-                                <DataTemplate DataType="{x:Type issues:Comment}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Text="{Binding Text}" />
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Right"
-                                            Text="{Binding Created, Converter={StaticResource DateTimeConverter}}" />
-                                    </Grid>
-
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </ContentControl>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
