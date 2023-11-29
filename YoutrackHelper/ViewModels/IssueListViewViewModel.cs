@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace YoutrackHelper.ViewModels
     public class IssueListViewViewModel : BindableBase, INavigationAware
     {
         private ObservableCollection<IIssue> issues;
+        private TimeCounter timeCounter = new ();
 
         public Project Project { get; set; }
 
@@ -23,6 +25,18 @@ namespace YoutrackHelper.ViewModels
         public DelegateCommand<IIssue> CompleteIssueCommand => new ((param) =>
         {
             _ = Connector.ApplyCommand(param.ShortName, "state 完了", string.Empty);
+            if (!timeCounter.IsTrackingNameRegistered(param.ShortName))
+            {
+                return;
+            }
+
+            var workingDuration = timeCounter.FinishTimeTracking(param.ShortName, DateTime.Now);
+
+            // 取得した時間が 60秒 に満たない場合は、誤操作によるものとして登録しない。
+            if (workingDuration.TotalSeconds > 60)
+            {
+                _ = ApplyCommand(param.ShortName, $"作業 {(int)workingDuration.TotalMinutes}m", string.Empty);
+            }
         });
 
         public DelegateCommand<IIssue> ChangeStatusCommand => new ((param) =>
@@ -30,11 +44,25 @@ namespace YoutrackHelper.ViewModels
             if (param.Status == "未完了")
             {
                 _ = ApplyCommand(param.ShortName, "state 作業中", string.Empty);
+                timeCounter.StartTimeTracking(param.ShortName, DateTime.Now);
             }
 
             if (param.Status == "作業中")
             {
                 _ = ApplyCommand(param.ShortName, "state 未完了", string.Empty);
+
+                if (!timeCounter.IsTrackingNameRegistered(param.ShortName))
+                {
+                    return;
+                }
+
+                var workingDuration = timeCounter.FinishTimeTracking(param.ShortName, DateTime.Now);
+
+                // 取得した時間が 60秒 に満たない場合は、誤操作によるものとして登録しない。
+                if (workingDuration.TotalSeconds > 60)
+                {
+                    _ = ApplyCommand(param.ShortName, $"作業 {(int)workingDuration.TotalMinutes}m", string.Empty);
+                }
             }
         });
 
