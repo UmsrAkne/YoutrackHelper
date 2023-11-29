@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Prism.Mvvm;
@@ -24,6 +25,8 @@ namespace YoutrackHelper.Models
                 {
                     Completed = ((JArray)f.ValueId)[0].ToString() == "完了";
                 }
+
+                Comments = Issue.Comments.ToList();
             }
         }
 
@@ -76,6 +79,8 @@ namespace YoutrackHelper.Models
         }
 
         public string ShortName { get => shortName; set => SetProperty(ref shortName, value); }
+
+        public List<Comment> Comments { get; set; } = new ();
 
         private Issue Issue { get; set; }
     }

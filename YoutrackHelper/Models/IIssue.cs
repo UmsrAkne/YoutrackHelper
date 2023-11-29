@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using YouTrackSharp.Issues;
 
 namespace YoutrackHelper.Models
 {
@@ -13,5 +15,7 @@ namespace YoutrackHelper.Models
         public string Status { get; set; }
 
         public string ShortName { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }
