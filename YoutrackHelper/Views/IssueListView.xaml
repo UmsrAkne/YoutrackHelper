@@ -1,4 +1,5 @@
 <UserControl
+    IsEnabled="{Binding UiEnabled}"
     d:DataContext="{d:DesignInstance viewModels:IssueListViewViewModel}"
     d:DesignHeight="300"
     mc:Ignorable="d"

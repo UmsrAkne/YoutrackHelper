@@ -15,12 +15,15 @@ namespace YoutrackHelper.ViewModels
     {
         private ObservableCollection<IIssue> issues;
         private TimeCounter timeCounter = new ();
+        private bool uiEnabled;
 
         public Project Project { get; set; }
 
         public Connector Connector { get; set; }
 
         public ObservableCollection<IIssue> IssueWrappers { get => issues; set => SetProperty(ref issues, value); }
+
+        public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
 
         public DelegateCommand<IIssue> CompleteIssueCommand => new ((param) =>
         {
@@ -68,6 +71,7 @@ namespace YoutrackHelper.ViewModels
 
         public DelegateCommand UpdateIssueListCommand => new (() =>
         {
+            UiEnabled = false;
             _ = GetIssuesAsync();
         });
 
@@ -91,6 +95,7 @@ namespace YoutrackHelper.ViewModels
         {
             await Connector.LoadIssues(Project.ShortName);
             IssueWrappers = new ObservableCollection<IIssue>(Connector.IssueWrappers);
+            UiEnabled = true;
             // Message = Connector.ErrorMessage;
         }
 
