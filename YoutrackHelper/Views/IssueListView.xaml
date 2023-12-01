@@ -15,6 +15,13 @@
         <models:DateTimeConverter x:Key="DateTimeConverter" />
     </UserControl.Resources>
 
+    <UserControl.InputBindings>
+        <KeyBinding
+            Command="{Binding UpdateIssueListCommand}"
+            Key="R"
+            Modifiers="Control" />
+    </UserControl.InputBindings>
+
     <Grid>
         <ListView
             ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
