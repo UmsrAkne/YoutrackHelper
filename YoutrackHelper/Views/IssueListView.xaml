@@ -21,6 +21,11 @@
             Command="{Binding UpdateIssueListCommand}"
             Key="R"
             Modifiers="Control" />
+
+        <KeyBinding
+            Command="{Binding CreateIssueCommand}"
+            Key="N"
+            Modifiers="Control" />
     </UserControl.InputBindings>
 
     <Grid>

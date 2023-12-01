@@ -75,6 +75,11 @@ namespace YoutrackHelper.ViewModels
             _ = GetIssuesAsync();
         });
 
+        public DelegateCommand CreateIssueCommand => new (() =>
+        {
+            _ = Connector.CreateIssue(Project.ShortName);
+        });
+
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Project = navigationContext.Parameters.GetValue<Project>(nameof(Project));
