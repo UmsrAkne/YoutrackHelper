@@ -1,4 +1,5 @@
 <UserControl
+    IsEnabled="{Binding UiEnabled}"
     d:DataContext="{d:DesignInstance viewModels:IssueListViewViewModel}"
     d:DesignHeight="300"
     mc:Ignorable="d"
@@ -14,6 +15,13 @@
     <UserControl.Resources>
         <models:DateTimeConverter x:Key="DateTimeConverter" />
     </UserControl.Resources>
+
+    <UserControl.InputBindings>
+        <KeyBinding
+            Command="{Binding UpdateIssueListCommand}"
+            Key="R"
+            Modifiers="Control" />
+    </UserControl.InputBindings>
 
     <Grid>
         <ListView
