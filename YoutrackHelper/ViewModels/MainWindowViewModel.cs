@@ -6,6 +6,6 @@ namespace YoutrackHelper.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         // ReSharper disable once MemberCanBeMadeStatic.Global
-        public string Title => "Prism Application";
+        public string Title => "YouTrack Helper";
     }
 }
