@@ -77,7 +77,7 @@ namespace YoutrackHelper.ViewModels
 
         public DelegateCommand CreateIssueCommand => new (() =>
         {
-            _ = Connector.CreateIssue(Project.ShortName);
+            _ = PostIssue(Project.ShortName, "title", "description");
         });
 
         public void OnNavigatedTo(NavigationContext navigationContext)
@@ -102,6 +102,13 @@ namespace YoutrackHelper.ViewModels
             IssueWrappers = new ObservableCollection<IIssue>(Connector.IssueWrappers);
             UiEnabled = true;
             // Message = Connector.ErrorMessage;
+        }
+
+        private async Task PostIssue(string projectShortName, string title, string description)
+        {
+            UiEnabled = false;
+            await Connector.CreateIssue(projectShortName, title, description);
+            await GetIssuesAsync();
         }
 
         private async Task ApplyCommand(string shortName, string command, string comment)
