@@ -24,12 +24,17 @@
 
         <KeyBinding
             Command="{Binding CreateIssueCommand}"
-            Key="N"
+            Key="Enter"
             Modifiers="Control" />
     </UserControl.InputBindings>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <ListView
+            Grid.Row="0"
             ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
             ItemsSource="{Binding IssueWrappers}"
             Style="{StaticResource ListViewStyle}">
@@ -189,5 +194,30 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <StackPanel Grid.Row="1">
+            <DockPanel Margin="2">
+                <TextBlock Text="Title :" Width="80" />
+                <TextBox
+                    AcceptsReturn="False"
+                    DockPanel.Dock="Right"
+                    Text="{Binding TemporaryIssueTitle, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+            <DockPanel Margin="2">
+                <TextBlock Text="Description :" Width="80" />
+                <TextBox
+                    AcceptsReturn="True"
+                    DockPanel.Dock="Right"
+                    Text="{Binding TemporaryIssueDescription, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+            <Button
+                Command="{Binding CreateIssueCommand}"
+                Content="new Issue (Ctrl + Enter)"
+                HorizontalAlignment="Right"
+                Margin="3"
+                Padding="5,0" />
+        </StackPanel>
     </Grid>
 </UserControl>

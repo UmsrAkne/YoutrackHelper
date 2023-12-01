@@ -16,6 +16,8 @@ namespace YoutrackHelper.ViewModels
         private ObservableCollection<IIssue> issues;
         private TimeCounter timeCounter = new ();
         private bool uiEnabled;
+        private string temporaryIssueTitle;
+        private string temporaryIssueDescription;
 
         public Project Project { get; set; }
 
@@ -24,6 +26,18 @@ namespace YoutrackHelper.ViewModels
         public ObservableCollection<IIssue> IssueWrappers { get => issues; set => SetProperty(ref issues, value); }
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
+
+        public string TemporaryIssueTitle
+        {
+            get => temporaryIssueTitle;
+            set => SetProperty(ref temporaryIssueTitle, value);
+        }
+
+        public string TemporaryIssueDescription
+        {
+            get => temporaryIssueDescription;
+            set => SetProperty(ref temporaryIssueDescription, value);
+        }
 
         public DelegateCommand<IIssue> CompleteIssueCommand => new ((param) =>
         {
@@ -77,7 +91,14 @@ namespace YoutrackHelper.ViewModels
 
         public DelegateCommand CreateIssueCommand => new (() =>
         {
-            _ = PostIssue(Project.ShortName, "title", "description");
+            if (string.IsNullOrWhiteSpace(TemporaryIssueTitle))
+            {
+                return;
+            }
+
+            _ = PostIssue(Project.ShortName, TemporaryIssueTitle, TemporaryIssueDescription);
+            TemporaryIssueTitle = string.Empty;
+            TemporaryIssueDescription = string.Empty;
         });
 
         public void OnNavigatedTo(NavigationContext navigationContext)
