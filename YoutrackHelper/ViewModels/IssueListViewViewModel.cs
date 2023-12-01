@@ -16,6 +16,8 @@ namespace YoutrackHelper.ViewModels
         private ObservableCollection<IIssue> issues;
         private TimeCounter timeCounter = new ();
         private bool uiEnabled;
+        private string temporaryIssueTitle;
+        private string temporaryIssueDescription;
 
         public Project Project { get; set; }
 
@@ -24,6 +26,18 @@ namespace YoutrackHelper.ViewModels
         public ObservableCollection<IIssue> IssueWrappers { get => issues; set => SetProperty(ref issues, value); }
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
+
+        public string TemporaryIssueTitle
+        {
+            get => temporaryIssueTitle;
+            set => SetProperty(ref temporaryIssueTitle, value);
+        }
+
+        public string TemporaryIssueDescription
+        {
+            get => temporaryIssueDescription;
+            set => SetProperty(ref temporaryIssueDescription, value);
+        }
 
         public DelegateCommand<IIssue> CompleteIssueCommand => new ((param) =>
         {
@@ -75,6 +89,18 @@ namespace YoutrackHelper.ViewModels
             _ = GetIssuesAsync();
         });
 
+        public DelegateCommand CreateIssueCommand => new (() =>
+        {
+            if (string.IsNullOrWhiteSpace(TemporaryIssueTitle))
+            {
+                return;
+            }
+
+            _ = PostIssue(Project.ShortName, TemporaryIssueTitle, TemporaryIssueDescription);
+            TemporaryIssueTitle = string.Empty;
+            TemporaryIssueDescription = string.Empty;
+        });
+
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Project = navigationContext.Parameters.GetValue<Project>(nameof(Project));
@@ -97,6 +123,13 @@ namespace YoutrackHelper.ViewModels
             IssueWrappers = new ObservableCollection<IIssue>(Connector.IssueWrappers);
             UiEnabled = true;
             // Message = Connector.ErrorMessage;
+        }
+
+        private async Task PostIssue(string projectShortName, string title, string description)
+        {
+            UiEnabled = false;
+            await Connector.CreateIssue(projectShortName, title, description);
+            await GetIssuesAsync();
         }
 
         private async Task ApplyCommand(string shortName, string command, string comment)
