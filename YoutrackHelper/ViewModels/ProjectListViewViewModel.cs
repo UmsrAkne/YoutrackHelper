@@ -11,7 +11,7 @@ using YouTrackSharp.Projects;
 namespace YoutrackHelper.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class ProjectListViewViewModel : BindableBase
+    public class ProjectListViewViewModel : BindableBase, INavigationAware
     {
         private readonly IRegionManager regionManager;
         private List<Project> projects;
@@ -53,6 +53,19 @@ namespace YoutrackHelper.ViewModels
 
             regionManager.RequestNavigate("ContentRegion", "IssueListView", param);
         });
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
 
         private async Task GetProjectsAsync(string uri, string perm)
         {

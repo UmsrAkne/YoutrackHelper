@@ -6,6 +6,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using YoutrackHelper.Models;
+using YoutrackHelper.Views;
 using YouTrackSharp.Projects;
 
 namespace YoutrackHelper.ViewModels
@@ -18,6 +19,12 @@ namespace YoutrackHelper.ViewModels
         private bool uiEnabled;
         private string temporaryIssueTitle;
         private string temporaryIssueDescription;
+        private readonly IRegionManager regionManager;
+
+        public IssueListViewViewModel(IRegionManager regionManager)
+        {
+            this.regionManager = regionManager;
+        }
 
         public Project Project { get; set; }
 
@@ -47,7 +54,11 @@ namespace YoutrackHelper.ViewModels
                 return;
             }
 
-            var workingDuration = timeCounter.FinishTimeTracking(param.ShortName, DateTime.Now);
+            var now = DateTime.Now;
+            var workingDuration = timeCounter.FinishTimeTracking(param.ShortName, now);
+            var startedAt = now - workingDuration;
+            const string format = "yyyy/MM/dd HH:mm";
+            _ = ApplyCommand(param.ShortName, "comment", $"作業完了 {startedAt.ToString(format)} - {now.ToString(format)}");
 
             // 取得した時間が 60秒 に満たない場合は、誤操作によるものとして登録しない。
             if (workingDuration.TotalSeconds > 60)
@@ -99,6 +110,11 @@ namespace YoutrackHelper.ViewModels
             _ = PostIssue(Project.ShortName, TemporaryIssueTitle, TemporaryIssueDescription);
             TemporaryIssueTitle = string.Empty;
             TemporaryIssueDescription = string.Empty;
+        });
+
+        public DelegateCommand ShowProjectListViewCommand => new (() =>
+        {
+            regionManager.RequestNavigate("ContentRegion", nameof(ProjectListView));
         });
 
         public void OnNavigatedTo(NavigationContext navigationContext)
