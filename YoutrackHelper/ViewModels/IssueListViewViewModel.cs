@@ -6,6 +6,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using YoutrackHelper.Models;
+using YoutrackHelper.Views;
 using YouTrackSharp.Projects;
 
 namespace YoutrackHelper.ViewModels
@@ -18,6 +19,12 @@ namespace YoutrackHelper.ViewModels
         private bool uiEnabled;
         private string temporaryIssueTitle;
         private string temporaryIssueDescription;
+        private readonly IRegionManager regionManager;
+
+        public IssueListViewViewModel(IRegionManager regionManager)
+        {
+            this.regionManager = regionManager;
+        }
 
         public Project Project { get; set; }
 
@@ -99,6 +106,11 @@ namespace YoutrackHelper.ViewModels
             _ = PostIssue(Project.ShortName, TemporaryIssueTitle, TemporaryIssueDescription);
             TemporaryIssueTitle = string.Empty;
             TemporaryIssueDescription = string.Empty;
+        });
+
+        public DelegateCommand ShowProjectListViewCommand => new (() =>
+        {
+            regionManager.RequestNavigate("ContentRegion", nameof(ProjectListView));
         });
 
         public void OnNavigatedTo(NavigationContext navigationContext)

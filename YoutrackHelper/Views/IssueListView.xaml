@@ -30,11 +30,21 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
+        <StatusBar Grid.Row="0">
+            <Button
+                Command="{Binding ShowProjectListViewCommand}"
+                Content="← Projects"
+                HorizontalAlignment="Left"
+                Padding="5,0" />
+        </StatusBar>
+
         <ListView
-            Grid.Row="0"
+            Grid.Row="1"
             ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
             ItemsSource="{Binding IssueWrappers}"
             Style="{StaticResource ListViewStyle}">
@@ -195,7 +205,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="2">
             <DockPanel Margin="2">
                 <TextBlock Text="Title :" Width="80" />
                 <TextBox
