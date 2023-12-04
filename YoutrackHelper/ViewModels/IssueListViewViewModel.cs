@@ -54,7 +54,11 @@ namespace YoutrackHelper.ViewModels
                 return;
             }
 
-            var workingDuration = timeCounter.FinishTimeTracking(param.ShortName, DateTime.Now);
+            var now = DateTime.Now;
+            var workingDuration = timeCounter.FinishTimeTracking(param.ShortName, now);
+            var startedAt = now - workingDuration;
+            const string format = "yyyy/MM/dd HH:mm";
+            _ = ApplyCommand(param.ShortName, "comment", $"作業完了 {startedAt.ToString(format)} - {now.ToString(format)}");
 
             // 取得した時間が 60秒 に満たない場合は、誤操作によるものとして登録しない。
             if (workingDuration.TotalSeconds > 60)
