@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using YoutrackHelper.Models;
 using YoutrackHelper.Views;
 using YouTrackSharp.Projects;
@@ -20,10 +21,12 @@ namespace YoutrackHelper.ViewModels
         private string temporaryIssueTitle;
         private string temporaryIssueDescription;
         private readonly IRegionManager regionManager;
+        private readonly IDialogService dialogService;
 
-        public IssueListViewViewModel(IRegionManager regionManager)
+        public IssueListViewViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
             this.regionManager = regionManager;
+            this.dialogService = dialogService;
         }
 
         public Project Project { get; set; }
