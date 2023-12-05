@@ -1,7 +1,6 @@
 <Page
-    Height="450"
     Title="IssueDetailPage"
-    Width="800"
+    Width="600"
     d:DataContext="{d:DesignInstance viewModels:IssueDetailPageViewModel}"
     mc:Ignorable="d"
     x:Class="YoutrackHelper.Views.IssueDetailPage"
@@ -10,5 +9,30 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:YoutrackHelper.ViewModels"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid />
+
+    <Grid Margin="3">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Title : " />
+                <TextBlock Text="Issue Title" />
+            </StackPanel>
+
+            <TextBlock Text="Description : " />
+            <TextBlock Text="Issue Description" />
+
+        </StackPanel>
+
+        <Button
+            Command="{Binding CloseCommand}"
+            Content="Close"
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            Padding="10,0" />
+
+    </Grid>
 </Page>
