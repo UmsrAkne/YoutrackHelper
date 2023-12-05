@@ -120,6 +120,24 @@ namespace YoutrackHelper.ViewModels
             regionManager.RequestNavigate("ContentRegion", nameof(ProjectListView));
         });
 
+        public DelegateCommand<IssueWrapper> ShowIssueDetailDialogCommand => new ((param) =>
+        {
+            if (param == null)
+            {
+                return;
+            }
+
+            var dp = new DialogParameters
+            {
+                { nameof(IssueWrapper), param },
+                { nameof(Connector), Connector },
+            };
+
+            dialogService.ShowDialog(nameof(IssueDetailPage), dp, _ =>
+            {
+            });
+        });
+
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Project = navigationContext.Parameters.GetValue<Project>(nameof(Project));
