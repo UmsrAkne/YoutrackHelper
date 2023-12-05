@@ -20,6 +20,7 @@ namespace YoutrackHelper
         {
             containerRegistry.RegisterForNavigation<ProjectListView, ProjectListViewViewModel>();
             containerRegistry.RegisterForNavigation<IssueListView, IssueListViewViewModel>();
+            containerRegistry.RegisterDialog<IssueDetailPage, IssueDetailPageViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
