@@ -14,6 +14,8 @@ namespace YoutrackHelper.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
+        public IssueWrapper IssueWrapper { get => issueWrapper; set => SetProperty(ref issueWrapper, value); }
+
         public string Title => string.Empty;
 
         public DelegateCommand CloseCommand => new (() =>
@@ -33,7 +35,7 @@ namespace YoutrackHelper.ViewModels
         public void OnDialogOpened(IDialogParameters parameters)
         {
             connector = parameters.GetValue<Connector>(nameof(Connector));
-            issueWrapper = parameters.GetValue<IssueWrapper>(nameof(IssueWrapper));
+            IssueWrapper = parameters.GetValue<IssueWrapper>(nameof(IssueWrapper));
         }
     }
 }
