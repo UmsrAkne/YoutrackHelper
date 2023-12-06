@@ -47,7 +47,16 @@
             Grid.Row="1"
             ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
             ItemsSource="{Binding IssueWrappers}"
-            Style="{StaticResource ListViewStyle}">
+            Style="{StaticResource ListViewStyle}"
+            x:Name="ListView">
+
+            <ListView.InputBindings>
+                <KeyBinding
+                    Command="{Binding ShowIssueDetailDialogCommand}"
+                    CommandParameter="{Binding ElementName=ListView, Path=SelectedItem}"
+                    Key="I"
+                    Modifiers="Control" />
+            </ListView.InputBindings>
 
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:IIssue}">
