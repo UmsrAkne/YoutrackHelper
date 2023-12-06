@@ -31,12 +31,21 @@
                 <TextBlock Text="{Binding IssueWrapper.Status}" />
                 <Border Margin="5,0" Width="0" />
 
-                <ToggleButton Content="作業開始" Padding="5,0">
+                <ToggleButton
+                    Command="{Binding ToggleStatusCommand}"
+                    Content="作業開始"
+                    Padding="5,0">
+
                     <ToggleButton.Style>
                         <Style TargetType="ToggleButton">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IssueWrapper.Status}" Value="未完了">
                                     <Setter Property="IsEnabled" Value="True" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding IssueWrapper.Status}" Value="作業中">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                    <Setter Property="Content" Value="作業中" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -48,13 +57,21 @@
                     Margin="4,0"
                     Width="10" />
 
-                <ToggleButton Content="中断" Padding="5,0">
+                <ToggleButton
+                    Command="{Binding ToggleStatusCommand}"
+                    Content="中断"
+                    Padding="5,0">
+
                     <ToggleButton.Style>
                         <Style TargetType="ToggleButton">
                             <Setter Property="IsEnabled" Value="False" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IssueWrapper.Status}" Value="作業中">
                                     <Setter Property="IsEnabled" Value="True" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding IssueWrapper.Status}" Value="未完了">
+                                    <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
