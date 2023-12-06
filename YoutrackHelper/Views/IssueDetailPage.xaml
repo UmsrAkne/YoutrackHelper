@@ -29,6 +29,53 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="状態 : " />
                 <TextBlock Text="{Binding IssueWrapper.Status}" />
+                <Border Margin="5,0" Width="0" />
+
+                <ToggleButton Content="作業開始" Padding="5,0">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IssueWrapper.Status}" Value="未完了">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+                <Border
+                    Background="DimGray"
+                    Height="1"
+                    Margin="4,0"
+                    Width="10" />
+
+                <ToggleButton Content="中断" Padding="5,0">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IssueWrapper.Status}" Value="作業中">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+
+                <Border
+                    Background="DimGray"
+                    Height="1"
+                    Margin="4,0"
+                    Width="10" />
+
+                <ToggleButton Content="完了" Padding="5,0" />
+
+                <Border Margin="20,0,0,0" />
+                <TextBlock Text="作業時間 :" />
+                <TextBox
+                    Margin="3,0"
+                    Text="0"
+                    Width="40" />
+                <TextBlock Text="min" />
             </StackPanel>
 
             <Border
