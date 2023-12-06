@@ -94,6 +94,11 @@ namespace YoutrackHelper.Models
             }
         }
 
+        public async Task Complete(Connector connector, string comment)
+        {
+            SetIssue(await connector.ApplyCommand(ShortName, "state 完了", comment));
+        }
+
         private Issue Issue { get; set; }
 
         public void SetIssue(Issue issue)
