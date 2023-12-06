@@ -172,11 +172,11 @@ namespace YoutrackHelper.ViewModels
         private async Task ApplyCommand(string shortName, string command, string comment)
         {
             var issue = await Connector.ApplyCommand(shortName, command, comment);
-            var old = IssueWrappers.FirstOrDefault(i => i.ShortName == issue.ShortName);
+            var old = IssueWrappers.FirstOrDefault(i => i.ShortName == issue.Id);
             if (old != null)
             {
                 var index = IssueWrappers.IndexOf(old);
-                IssueWrappers[index] = issue;
+                ((IssueWrapper)IssueWrappers[index]).SetIssue(issue);
             }
         }
     }
