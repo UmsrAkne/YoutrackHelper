@@ -18,18 +18,7 @@ namespace YoutrackHelper.Models
 
         public IssueWrapper(Issue issue)
         {
-            Issue = issue;
-            if (Issue != null)
-            {
-                ShortName = Issue.Id;
-                var f = Issue.Fields.FirstOrDefault(f => f.Name == "State");
-                if (f != null)
-                {
-                    Completed = ((JArray)f.ValueId)[0].ToString() == "完了";
-                }
-
-                Comments = Issue.Comments.ToList();
-            }
+            SetIssue(issue);
         }
 
         public string Title
@@ -92,5 +81,25 @@ namespace YoutrackHelper.Models
         });
 
         private Issue Issue { get; set; }
+
+        public void SetIssue(Issue issue)
+        {
+            Issue = issue;
+            if (Issue == null)
+            {
+                return;
+            }
+
+            ShortName = Issue.Id;
+            var f = Issue.Fields.FirstOrDefault(f => f.Name == "State");
+            if (f != null)
+            {
+                Completed = ((JArray)f.ValueId)[0].ToString() == "完了";
+            }
+
+            RaisePropertyChanged(nameof(Status));
+
+            Comments = Issue.Comments.ToList();
+        }
     }
 }
