@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -79,6 +80,19 @@ namespace YoutrackHelper.Models
         {
             Expanded = !Expanded;
         });
+
+        public async Task ToggleStatus(Connector connector, string comment)
+        {
+            switch (Status)
+            {
+                case "未完了":
+                    SetIssue(await connector.ApplyCommand(ShortName, "state 作業中", comment));
+                    return;
+                case "作業中":
+                    SetIssue(await connector.ApplyCommand(ShortName, "state 未完了", comment));
+                    break;
+            }
+        }
 
         private Issue Issue { get; set; }
 
