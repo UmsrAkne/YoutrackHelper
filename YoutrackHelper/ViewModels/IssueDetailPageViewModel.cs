@@ -28,6 +28,11 @@ namespace YoutrackHelper.ViewModels
             _ = IssueWrapper.ToggleStatus(connector, "作業状態を変更しました");
         });
 
+        public DelegateCommand CompleteCommand => new (() =>
+        {
+            _ = IssueWrapper.Complete(connector, "作業を完了しました");
+        });
+
         public bool CanCloseDialog()
         {
             return true;
