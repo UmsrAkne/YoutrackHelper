@@ -81,8 +81,27 @@ namespace YoutrackHelper.Models
             Expanded = !Expanded;
         });
 
-        public async Task ToggleStatus(Connector connector, string comment)
+        public async Task ToggleStatus(Connector connector, TimeCounter counter)
         {
+            if (Status == "未完了")
+            {
+                counter.StartTimeTracking(shortName, DateTime.Now);
+            }
+
+            var comment = string.Empty;
+            if (counter.IsTrackingNameRegistered(ShortName) && Status == "作業中")
+            {
+                var now = DateTime.Now;
+                var duration = counter.FinishTimeTracking(shortName, now);
+                var startedAt = now - duration;
+                const string f = "yyyy/MM/dd HH:mm";
+                comment = $"中断 作業時間 {(int)duration.TotalMinutes} min ({startedAt.ToString(f)} - {now.ToString(f)})";
+                if (duration.TotalSeconds > 60)
+                {
+                    await connector.ApplyCommand(ShortName, $"作業 {(int)duration.TotalMinutes}m", string.Empty);
+                }
+            }
+
             switch (Status)
             {
                 case "未完了":
@@ -94,8 +113,22 @@ namespace YoutrackHelper.Models
             }
         }
 
-        public async Task Complete(Connector connector, string comment)
+        public async Task Complete(Connector connector, TimeCounter counter)
         {
+            var comment = string.Empty;
+            if (counter.IsTrackingNameRegistered(ShortName))
+            {
+                var now = DateTime.Now;
+                var duration = counter.FinishTimeTracking(shortName, now);
+                var startedAt = now - duration;
+                const string f = "yyyy/MM/dd HH:mm";
+                comment = $"完了 作業時間 {(int)duration.TotalMinutes} min ({startedAt.ToString(f)} - {now.ToString(f)})";
+                if (duration.TotalSeconds > 60)
+                {
+                    await connector.ApplyCommand(ShortName, $"作業 {(int)duration.TotalMinutes}m", string.Empty);
+                }
+            }
+
             SetIssue(await connector.ApplyCommand(ShortName, "state 完了", comment));
         }
 
