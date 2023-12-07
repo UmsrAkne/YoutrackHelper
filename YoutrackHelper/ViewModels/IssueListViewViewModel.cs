@@ -1,4 +1,3 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,49 +50,17 @@ namespace YoutrackHelper.ViewModels
 
         public DelegateCommand<IIssue> CompleteIssueCommand => new ((param) =>
         {
-            _ = Connector.ApplyCommand(param.ShortName, "state 完了", string.Empty);
-            if (!timeCounter.IsTrackingNameRegistered(param.ShortName))
+            if (param is IssueWrapper w)
             {
-                return;
-            }
-
-            var now = DateTime.Now;
-            var workingDuration = timeCounter.FinishTimeTracking(param.ShortName, now);
-            var startedAt = now - workingDuration;
-            const string format = "yyyy/MM/dd HH:mm";
-            _ = ApplyCommand(param.ShortName, "comment", $"作業完了 {startedAt.ToString(format)} - {now.ToString(format)}");
-
-            // 取得した時間が 60秒 に満たない場合は、誤操作によるものとして登録しない。
-            if (workingDuration.TotalSeconds > 60)
-            {
-                _ = ApplyCommand(param.ShortName, $"作業 {(int)workingDuration.TotalMinutes}m", string.Empty);
+                _ = w.Complete(Connector, timeCounter);
             }
         });
 
         public DelegateCommand<IIssue> ChangeStatusCommand => new ((param) =>
         {
-            if (param.Status == "未完了")
+            if (param is IssueWrapper w)
             {
-                _ = ApplyCommand(param.ShortName, "state 作業中", string.Empty);
-                timeCounter.StartTimeTracking(param.ShortName, DateTime.Now);
-            }
-
-            if (param.Status == "作業中")
-            {
-                _ = ApplyCommand(param.ShortName, "state 未完了", string.Empty);
-
-                if (!timeCounter.IsTrackingNameRegistered(param.ShortName))
-                {
-                    return;
-                }
-
-                var workingDuration = timeCounter.FinishTimeTracking(param.ShortName, DateTime.Now);
-
-                // 取得した時間が 60秒 に満たない場合は、誤操作によるものとして登録しない。
-                if (workingDuration.TotalSeconds > 60)
-                {
-                    _ = ApplyCommand(param.ShortName, $"作業 {(int)workingDuration.TotalMinutes}m", string.Empty);
-                }
+                _ = w.ToggleStatus(Connector, timeCounter);
             }
         });
 
@@ -131,6 +98,7 @@ namespace YoutrackHelper.ViewModels
             {
                 { nameof(IssueWrapper), param },
                 { nameof(Connector), Connector },
+                { nameof(TimeCounter), timeCounter },
             };
 
             dialogService.ShowDialog(nameof(IssueDetailPage), dp, _ =>

@@ -11,6 +11,7 @@ namespace YoutrackHelper.ViewModels
     {
         private Connector connector;
         private IssueWrapper issueWrapper;
+        private TimeCounter timeCounter;
 
         public event Action<IDialogResult> RequestClose;
 
@@ -25,12 +26,12 @@ namespace YoutrackHelper.ViewModels
 
         public DelegateCommand ToggleStatusCommand => new (() =>
         {
-            _ = IssueWrapper.ToggleStatus(connector, "作業状態を変更しました");
+            _ = IssueWrapper.ToggleStatus(connector, timeCounter);
         });
 
         public DelegateCommand CompleteCommand => new (() =>
         {
-            _ = IssueWrapper.Complete(connector, "作業を完了しました");
+            _ = IssueWrapper.Complete(connector, timeCounter);
         });
 
         public bool CanCloseDialog()
@@ -46,6 +47,7 @@ namespace YoutrackHelper.ViewModels
         {
             connector = parameters.GetValue<Connector>(nameof(Connector));
             IssueWrapper = parameters.GetValue<IssueWrapper>(nameof(IssueWrapper));
+            timeCounter = parameters.GetValue<TimeCounter>(nameof(TimeCounter));
         }
     }
 }
