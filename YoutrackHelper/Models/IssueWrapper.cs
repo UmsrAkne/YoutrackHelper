@@ -90,6 +90,7 @@ namespace YoutrackHelper.Models
         {
             if (StartedAt == DateTime.MinValue)
             {
+                WorkingDuration = TimeSpan.Zero;
                 return;
             }
 
@@ -126,6 +127,7 @@ namespace YoutrackHelper.Models
                 case "作業中":
                     SetIssue(await connector.ApplyCommand(ShortName, "state 未完了", comment));
                     StartedAt = DateTime.MinValue;
+                    UpdateWorkingDuration(DateTime.Now);
                     break;
             }
         }
@@ -148,6 +150,7 @@ namespace YoutrackHelper.Models
 
             SetIssue(await connector.ApplyCommand(ShortName, "state 完了", comment));
             StartedAt = DateTime.MinValue;
+            UpdateWorkingDuration(DateTime.Now);
         }
 
         private Issue Issue { get; set; }
