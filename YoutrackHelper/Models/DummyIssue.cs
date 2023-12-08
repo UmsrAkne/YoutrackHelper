@@ -21,6 +21,13 @@ namespace YoutrackHelper.Models
 
         public bool Expanded { get; set; }
 
+        public TimeSpan WorkingDuration { get; set; }
+
         public DelegateCommand ChangeVisibilityCommand { get; set; }
+
+        public void UpdateWorkingDuration(DateTime dateTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

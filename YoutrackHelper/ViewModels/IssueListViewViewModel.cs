@@ -31,8 +31,9 @@ namespace YoutrackHelper.ViewModels
             this.regionManager = regionManager;
             this.dialogService = dialogService;
 
-            timer = new Timer(60000);
+            timer = new Timer(1000);
             timer.Elapsed += UpdateWorkingDuration;
+            timer.Start();
         }
 
         public Project Project { get; set; }
@@ -179,6 +180,16 @@ namespace YoutrackHelper.ViewModels
 
         private void UpdateWorkingDuration(object sender, ElapsedEventArgs e)
         {
+            var names = timeCounter.GetTrackingNames().ToList();
+            if (!names.Any())
+            {
+                return;
+            }
+
+            var now = DateTime.Now;
+            IssueWrappers
+                .Where(i => names.Contains(i.ShortName))
+                .ToList().ForEach(i => i.UpdateWorkingDuration(now));
         }
     }
 }
