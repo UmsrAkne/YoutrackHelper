@@ -1,6 +1,8 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -12,13 +14,15 @@ using YouTrackSharp.Projects;
 namespace YoutrackHelper.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class IssueListViewViewModel : BindableBase, INavigationAware
+    public class IssueListViewViewModel : BindableBase, INavigationAware, IDisposable
     {
+        private readonly Timer timer;
         private ObservableCollection<IIssue> issues;
         private TimeCounter timeCounter = new ();
         private bool uiEnabled;
         private string temporaryIssueTitle;
         private string temporaryIssueDescription;
+        private bool disposed;
         private readonly IRegionManager regionManager;
         private readonly IDialogService dialogService;
 
@@ -26,6 +30,9 @@ namespace YoutrackHelper.ViewModels
         {
             this.regionManager = regionManager;
             this.dialogService = dialogService;
+
+            timer = new Timer(60000);
+            timer.Elapsed += UpdateWorkingDuration;
         }
 
         public Project Project { get; set; }
@@ -122,6 +129,28 @@ namespace YoutrackHelper.ViewModels
         {
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                timer.Stop();
+                timer.Dispose();
+            }
+
+            disposed = true;
+        }
+
         private async Task GetIssuesAsync()
         {
             await Connector.LoadIssues(Project.ShortName);
@@ -146,6 +175,10 @@ namespace YoutrackHelper.ViewModels
                 var index = IssueWrappers.IndexOf(old);
                 ((IssueWrapper)IssueWrappers[index]).SetIssue(issue);
             }
+        }
+
+        private void UpdateWorkingDuration(object sender, ElapsedEventArgs e)
+        {
         }
     }
 }
