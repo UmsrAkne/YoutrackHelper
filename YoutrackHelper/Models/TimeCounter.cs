@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace YoutrackHelper.Models
 {
@@ -40,6 +41,11 @@ namespace YoutrackHelper.Models
 
             trackingTimeDictionary.Remove(trackingName);
             return result;
+        }
+
+        public IEnumerable<string> GetTrackingNames()
+        {
+            return trackingTimeDictionary.Keys.Select(s => s);
         }
 
         public bool IsTrackingNameRegistered(string trackingName)

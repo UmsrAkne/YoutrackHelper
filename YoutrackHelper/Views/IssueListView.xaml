@@ -14,6 +14,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <UserControl.Resources>
         <models:DateTimeConverter x:Key="DateTimeConverter" />
+        <models:TimeSpanConverter x:Key="TimeSpanConverter" />
     </UserControl.Resources>
 
     <UserControl.InputBindings>
@@ -81,6 +82,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="300" />
+                                    <ColumnDefinition Width="60" />
                                     <ColumnDefinition Width="60" />
                                     <ColumnDefinition Width="60" />
                                     <ColumnDefinition Width="80" />
@@ -166,7 +168,9 @@
                                     <TextBlock Text="{Binding Status}" />
                                 </ToggleButton>
 
-                                <TextBlock Grid.Column="4" Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
+                                <TextBlock Grid.Column="4" Text="{Binding WorkingDuration, Converter={StaticResource TimeSpanConverter}}" />
+
+                                <TextBlock Grid.Column="5" Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
                             </Grid>
 
                             <ListView

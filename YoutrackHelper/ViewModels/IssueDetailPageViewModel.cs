@@ -12,6 +12,7 @@ namespace YoutrackHelper.ViewModels
         private Connector connector;
         private IssueWrapper issueWrapper;
         private TimeCounter timeCounter;
+        private TimerWrapper timerWrapper;
 
         public event Action<IDialogResult> RequestClose;
 
@@ -48,6 +49,19 @@ namespace YoutrackHelper.ViewModels
             connector = parameters.GetValue<Connector>(nameof(Connector));
             IssueWrapper = parameters.GetValue<IssueWrapper>(nameof(IssueWrapper));
             timeCounter = parameters.GetValue<TimeCounter>(nameof(TimeCounter));
+
+            if (timerWrapper != null)
+            {
+                return;
+            }
+
+            timerWrapper = new TimerWrapper((_, _) =>
+            {
+                IssueWrapper.UpdateWorkingDuration(DateTime.Now);
+            });
+
+            timerWrapper.Interval = 1000;
+            timerWrapper.Start();
         }
     }
 }

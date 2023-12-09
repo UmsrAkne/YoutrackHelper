@@ -16,6 +16,7 @@ namespace YoutrackHelper.Models
         private bool completed;
         private string shortName = string.Empty;
         private bool expanded;
+        private TimeSpan workingDuration;
 
         public IssueWrapper(Issue issue)
         {
@@ -76,10 +77,25 @@ namespace YoutrackHelper.Models
 
         public bool Expanded { get => expanded; set => SetProperty(ref expanded, value); }
 
+        public TimeSpan WorkingDuration { get => workingDuration; set => SetProperty(ref workingDuration, value); }
+
         public DelegateCommand ChangeVisibilityCommand => new (() =>
         {
             Expanded = !Expanded;
         });
+
+        private DateTime StartedAt { get; set; }
+
+        public void UpdateWorkingDuration(DateTime dateTime)
+        {
+            if (StartedAt == DateTime.MinValue)
+            {
+                WorkingDuration = TimeSpan.Zero;
+                return;
+            }
+
+            WorkingDuration = dateTime - StartedAt;
+        }
 
         public async Task ToggleStatus(Connector connector, TimeCounter counter)
         {
@@ -106,9 +122,12 @@ namespace YoutrackHelper.Models
             {
                 case "未完了":
                     SetIssue(await connector.ApplyCommand(ShortName, "state 作業中", comment));
+                    StartedAt = DateTime.Now;
                     return;
                 case "作業中":
                     SetIssue(await connector.ApplyCommand(ShortName, "state 未完了", comment));
+                    StartedAt = DateTime.MinValue;
+                    UpdateWorkingDuration(DateTime.Now);
                     break;
             }
         }
@@ -130,6 +149,8 @@ namespace YoutrackHelper.Models
             }
 
             SetIssue(await connector.ApplyCommand(ShortName, "state 完了", comment));
+            StartedAt = DateTime.MinValue;
+            UpdateWorkingDuration(DateTime.Now);
         }
 
         private Issue Issue { get; set; }
