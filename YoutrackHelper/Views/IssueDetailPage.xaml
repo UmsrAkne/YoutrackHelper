@@ -8,8 +8,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:issues="clr-namespace:YouTrackSharp.Issues;assembly=YouTrackSharp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:YoutrackHelper.Models"
     xmlns:viewModels="clr-namespace:YoutrackHelper.ViewModels"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Page.Resources>
+        <models:TimeSpanConverter x:Key="TimeSpanConverter" />
+    </Page.Resources>
 
     <Grid Margin="3">
         <Grid.RowDefinitions>
@@ -31,13 +36,11 @@
                 <TextBlock Text="{Binding IssueWrapper.Status}" />
                 <Border Margin="5,0" Width="0" />
 
-                <ToggleButton
-                    Command="{Binding ToggleStatusCommand}"
-                    Content="作業開始"
-                    Padding="5,0">
+                <ToggleButton Command="{Binding ToggleStatusCommand}" Padding="5,0">
 
                     <ToggleButton.Style>
                         <Style TargetType="ToggleButton">
+                            <Setter Property="Content" Value="作業開始" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IssueWrapper.Status}" Value="未完了">
                                     <Setter Property="IsEnabled" Value="True" />
@@ -45,7 +48,7 @@
 
                                 <DataTrigger Binding="{Binding IssueWrapper.Status}" Value="作業中">
                                     <Setter Property="IsEnabled" Value="False" />
-                                    <Setter Property="Content" Value="作業中" />
+                                    <Setter Property="Content" Value="{Binding IssueWrapper.WorkingDuration, Converter={StaticResource TimeSpanConverter}}" />
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding IssueWrapper.Status}" Value="完了">
