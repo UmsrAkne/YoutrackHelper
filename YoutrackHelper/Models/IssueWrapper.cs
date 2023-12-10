@@ -86,6 +86,8 @@ namespace YoutrackHelper.Models
 
         private DateTime StartedAt { get; set; }
 
+        private Issue Issue { get; set; }
+
         public void UpdateWorkingDuration(DateTime dateTime)
         {
             if (StartedAt == DateTime.MinValue)
@@ -153,9 +155,7 @@ namespace YoutrackHelper.Models
             UpdateWorkingDuration(DateTime.Now);
         }
 
-        private Issue Issue { get; set; }
-
-        public void SetIssue(Issue issue)
+        private void SetIssue(Issue issue)
         {
             Issue = issue;
             if (Issue == null)
