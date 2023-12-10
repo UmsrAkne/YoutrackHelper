@@ -16,15 +16,15 @@ namespace YoutrackHelper.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class IssueListViewViewModel : BindableBase, INavigationAware, IDisposable
     {
+        private readonly IRegionManager regionManager;
+        private readonly IDialogService dialogService;
         private readonly Timer timer;
+        private readonly TimeCounter timeCounter = new ();
         private ObservableCollection<IIssue> issues;
-        private TimeCounter timeCounter = new ();
         private bool uiEnabled;
         private string temporaryIssueTitle;
         private string temporaryIssueDescription;
         private bool disposed;
-        private readonly IRegionManager regionManager;
-        private readonly IDialogService dialogService;
 
         public IssueListViewViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -40,7 +40,11 @@ namespace YoutrackHelper.ViewModels
 
         public Connector Connector { get; set; }
 
-        public ObservableCollection<IIssue> IssueWrappers { get => issues; set => SetProperty(ref issues, value); }
+        public ObservableCollection<IIssue> IssueWrappers
+        {
+            get => issues;
+            private set => SetProperty(ref issues, value);
+        }
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
 
@@ -157,7 +161,6 @@ namespace YoutrackHelper.ViewModels
             await Connector.LoadIssues(Project.ShortName);
             IssueWrappers = new ObservableCollection<IIssue>(Connector.IssueWrappers);
             UiEnabled = true;
-            // Message = Connector.ErrorMessage;
         }
 
         private async Task PostIssue(string projectShortName, string title, string description)
@@ -165,17 +168,6 @@ namespace YoutrackHelper.ViewModels
             UiEnabled = false;
             await Connector.CreateIssue(projectShortName, title, description);
             await GetIssuesAsync();
-        }
-
-        private async Task ApplyCommand(string shortName, string command, string comment)
-        {
-            var issue = await Connector.ApplyCommand(shortName, command, comment);
-            var old = IssueWrappers.FirstOrDefault(i => i.ShortName == issue.Id);
-            if (old != null)
-            {
-                var index = IssueWrappers.IndexOf(old);
-                ((IssueWrapper)IssueWrappers[index]).SetIssue(issue);
-            }
         }
 
         private void UpdateWorkingDuration(object sender, ElapsedEventArgs e)
