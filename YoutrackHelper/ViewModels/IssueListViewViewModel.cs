@@ -25,6 +25,7 @@ namespace YoutrackHelper.ViewModels
         private string temporaryIssueTitle;
         private string temporaryIssueDescription;
         private bool disposed;
+        private string projectName = string.Empty;
 
         public IssueListViewViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -37,6 +38,8 @@ namespace YoutrackHelper.ViewModels
         }
 
         public Project Project { get; set; }
+
+        public string ProjectName { get => projectName; private set => SetProperty(ref projectName, value); }
 
         public Connector Connector { get; set; }
 
@@ -96,6 +99,7 @@ namespace YoutrackHelper.ViewModels
 
         public DelegateCommand ShowProjectListViewCommand => new (() =>
         {
+            ProjectName = string.Empty; // プロジェクトビューに移動する際に、タイトルバーのプロジェクト名を消すためにプロパティを消去
             regionManager.RequestNavigate("ContentRegion", nameof(ProjectListView));
         });
 
@@ -121,6 +125,7 @@ namespace YoutrackHelper.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Project = navigationContext.Parameters.GetValue<Project>(nameof(Project));
+            ProjectName = Project.Name;
             Connector = navigationContext.Parameters.GetValue<Connector>(nameof(Connector));
             _ = GetIssuesAsync();
         }
