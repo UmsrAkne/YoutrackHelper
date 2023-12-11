@@ -99,6 +99,7 @@ namespace YoutrackHelper.ViewModels
 
         public DelegateCommand ShowProjectListViewCommand => new (() =>
         {
+            ProjectName = string.Empty; // プロジェクトビューに移動する際に、タイトルバーのプロジェクト名を消すためにプロパティを消去
             regionManager.RequestNavigate("ContentRegion", nameof(ProjectListView));
         });
 
