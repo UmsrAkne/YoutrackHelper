@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using YouTrackSharp;
 using YouTrackSharp.Issues;
@@ -63,13 +64,30 @@ namespace YoutrackHelper.Models
                 IssueWrappers = issues
                     .Select(i => (IIssue)new IssueWrapper(i))
                     .OrderBy(i => i.Completed)
-                    .ThenByDescending(i => i.ShortName)
+                    .ThenByDescending(i => ConvertIssueIdToId(i.ShortName))
                     .ToList();
             }
             catch (Exception e)
             {
                 Debug.WriteLine($"{e}(Connector : 52)");
                 ErrorMessage = "接続に失敗しました";
+            }
+
+            return;
+
+            int ConvertIssueIdToId(string input)
+            {
+                // 正規表現パターンを定義して数値部分を抽出。 Youtrack の仕様上、 IssueId はかならず ABC-10 のようなフォーマット
+                var match = Regex.Match(input, @"[^A-Za-z]*-(\d+)");
+
+                if (!match.Success)
+                {
+                    return 0;
+                }
+
+                var numberPart = match.Groups[1].Value; // 数値部分の文字列を取得
+
+                return int.TryParse(numberPart, out var result) ? result : 0;
             }
         }
 
