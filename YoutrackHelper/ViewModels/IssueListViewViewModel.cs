@@ -104,6 +104,17 @@ namespace YoutrackHelper.ViewModels
             TemporaryIssueDescription = string.Empty;
         });
 
+        public DelegateCommand<IIssue> PostCommentCommand => new ((param) =>
+        {
+            if (param == null)
+            {
+                return;
+            }
+
+            _ = PostCommentAsync(param.ShortName, param.TemporaryComment);
+            param.TemporaryComment = string.Empty;
+        });
+
         public DelegateCommand ShowProjectListViewCommand => new (() =>
         {
             ProjectName = string.Empty; // プロジェクトビューに移動する際に、タイトルバーのプロジェクト名を消すためにプロパティを消去
@@ -179,6 +190,13 @@ namespace YoutrackHelper.ViewModels
         {
             UiEnabled = false;
             await Connector.CreateIssue(projectShortName, title, description);
+            await GetIssuesAsync();
+        }
+
+        private async Task PostCommentAsync(string projectShortName, string comment)
+        {
+            UiEnabled = false;
+            await Connector.ApplyCommand(projectShortName, "comment", comment);
             await GetIssuesAsync();
         }
 
