@@ -73,6 +73,8 @@ namespace YoutrackHelper.Models
 
         public string ShortName { get => shortName; set => SetProperty(ref shortName, value); }
 
+        public string TemporaryComment { get; set; } = string.Empty;
+
         public List<Comment> Comments { get; set; } = new ();
 
         public bool Expanded { get => expanded; set => SetProperty(ref expanded, value); }

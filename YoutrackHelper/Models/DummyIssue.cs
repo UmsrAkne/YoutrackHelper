@@ -17,6 +17,8 @@ namespace YoutrackHelper.Models
 
         public string ShortName { get; set; } = string.Empty;
 
+        public string TemporaryComment { get; set; } = string.Empty;
+
         public List<Comment> Comments { get; set; } = new ();
 
         public bool Expanded { get; set; }
