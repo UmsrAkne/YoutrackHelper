@@ -104,6 +104,17 @@ namespace YoutrackHelper.ViewModels
             TemporaryIssueDescription = string.Empty;
         });
 
+        public DelegateCommand<IIssue> PostCommentCommand => new ((param) =>
+        {
+            if (param == null || string.IsNullOrWhiteSpace(param.TemporaryComment))
+            {
+                return;
+            }
+
+            _ = PostCommentAsync(param.ShortName, param.TemporaryComment);
+            param.TemporaryComment = string.Empty;
+        });
+
         public DelegateCommand ShowProjectListViewCommand => new (() =>
         {
             ProjectName = string.Empty; // プロジェクトビューに移動する際に、タイトルバーのプロジェクト名を消すためにプロパティを消去
@@ -180,6 +191,17 @@ namespace YoutrackHelper.ViewModels
             UiEnabled = false;
             await Connector.CreateIssue(projectShortName, title, description);
             await GetIssuesAsync();
+        }
+
+        private async Task PostCommentAsync(string issueId, string comment)
+        {
+            await Connector.ApplyCommand(issueId, "comment", comment);
+            var i = await Connector.GetIssue(issueId);
+            var w = IssueWrappers.FirstOrDefault(ii => ii.ShortName == issueId);
+            if (w is IssueWrapper wrapper)
+            {
+                wrapper.SetIssue(i);
+            }
         }
 
         private void UpdateWorkingDuration(object sender, ElapsedEventArgs e)

@@ -17,6 +17,7 @@ namespace YoutrackHelper.Models
         private string shortName = string.Empty;
         private bool expanded;
         private TimeSpan workingDuration;
+        private string temporaryComment = string.Empty;
 
         public IssueWrapper(Issue issue)
         {
@@ -72,6 +73,8 @@ namespace YoutrackHelper.Models
         }
 
         public string ShortName { get => shortName; set => SetProperty(ref shortName, value); }
+
+        public string TemporaryComment { get => temporaryComment; set => SetProperty(ref temporaryComment, value); }
 
         public List<Comment> Comments { get; set; } = new ();
 
@@ -155,7 +158,7 @@ namespace YoutrackHelper.Models
             UpdateWorkingDuration(DateTime.Now);
         }
 
-        private void SetIssue(Issue issue)
+        public void SetIssue(Issue issue)
         {
             Issue = issue;
             if (Issue == null)
@@ -173,6 +176,7 @@ namespace YoutrackHelper.Models
             RaisePropertyChanged(nameof(Status));
 
             Comments = Issue.Comments.ToList();
+            RaisePropertyChanged(nameof(Comments));
         }
     }
 }
