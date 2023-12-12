@@ -8,17 +8,18 @@ namespace YoutrackHelper.Models
     {
         private const string TotalTimeTrackingKey = "total-duration-key";
         private readonly Dictionary<string, DateTime> trackingTimeDictionary = new ();
-        private TimeCounter totalTimeCounter;
+        private readonly TimeCounter totalTimeCounter;
         private TimeSpan totalTimeSpan = TimeSpan.Zero;
-        private bool totalTimeTracking;
 
         public bool TotalTimeTracking
         {
-            get => totalTimeTracking;
-            set
+            get => totalTimeCounter != null;
+            init
             {
-                totalTimeCounter ??= new TimeCounter();
-                totalTimeTracking = value;
+                if (value)
+                {
+                    totalTimeCounter ??= new TimeCounter();
+                }
             }
         }
 
