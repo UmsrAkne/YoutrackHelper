@@ -6,7 +6,22 @@ namespace YoutrackHelper.Models
 {
     public class TimeCounter
     {
+        private const string TotalTimeTrackingKey = "total-duration-key";
         private readonly Dictionary<string, DateTime> trackingTimeDictionary = new ();
+        private readonly TimeCounter totalTimeCounter;
+        private TimeSpan totalTimeSpan = TimeSpan.Zero;
+
+        public bool TotalTimeTracking
+        {
+            get => totalTimeCounter != null;
+            init
+            {
+                if (value)
+                {
+                    totalTimeCounter ??= new TimeCounter();
+                }
+            }
+        }
 
         /// <summary>
         ///     指定したキーで時間計測の開始時刻を設定します。
@@ -17,6 +32,12 @@ namespace YoutrackHelper.Models
         public void StartTimeTracking(string trackingName, DateTime dateTime)
         {
             trackingTimeDictionary.TryAdd(trackingName, dateTime);
+            if (!TotalTimeTracking)
+            {
+                return;
+            }
+
+            totalTimeCounter.StartTimeTracking(TotalTimeTrackingKey, dateTime);
         }
 
         /// <summary>
@@ -40,6 +61,14 @@ namespace YoutrackHelper.Models
                 : TimeSpan.Zero;
 
             trackingTimeDictionary.Remove(trackingName);
+
+            if (TotalTimeTracking && trackingTimeDictionary.Keys.Count == 0)
+            {
+                // ここまでの処理ですべてのトラッキングが終了したら、トータルの集計も終了する。
+                // trackingTimeDictionary に一つでもキーが残っている場合は、継続中のタスクが存在するため、トータルの計測を継続する。
+                totalTimeSpan += totalTimeCounter.FinishTimeTracking(TotalTimeTrackingKey, dateTime);
+            }
+
             return result;
         }
 
@@ -51,6 +80,23 @@ namespace YoutrackHelper.Models
         public bool IsTrackingNameRegistered(string trackingName)
         {
             return trackingTimeDictionary.ContainsKey(trackingName);
+        }
+
+        public DateTime GetStartedDateTime(string trackingName)
+        {
+            return trackingTimeDictionary.TryGetValue(trackingName, out var time) ? time : default;
+        }
+
+        public TimeSpan GetTotalWorkingDuration(DateTime now)
+        {
+            if (!TotalTimeTracking)
+            {
+                return TimeSpan.Zero;
+            }
+
+            return totalTimeCounter.IsTrackingNameRegistered(TotalTimeTrackingKey)
+                ? totalTimeSpan + (now - totalTimeCounter.GetStartedDateTime(TotalTimeTrackingKey))
+                : totalTimeSpan;
         }
     }
 }

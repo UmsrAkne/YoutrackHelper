@@ -6,5 +6,15 @@
     &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.FinishTimeTrackingTest_2&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.FinishTimeTrackingTest_3&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.FinishTimeTrackingTest_出力後にログが消えているか&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalTimeSpanTest_作業完了後の取得&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalTimeSpanTest_作業完了後の取得_複数スタンプ&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalTimeSpanTest_作業中の取得_&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalTimeSpanTest_作業中の取得_複数スタンプ&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalWorkingDuration_複数キー&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalWorkingDuration_複数キー(0,1000,1000,2000,3000,2000)&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalWorkingDuration&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalWorkingDuration(0,1000,1000)&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalWorkingDuration_作業継続中&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B0C2C6F7-0D95-493A-B2CC-F098E8A934BF::net6.0-windows::YoutrackHelperTests.Models.TimeCounterTest.GetTotalWorkingDuration_作業継続中(0,1000,1000,3000,3000)&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

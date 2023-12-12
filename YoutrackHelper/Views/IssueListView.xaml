@@ -42,6 +42,9 @@
                 Content="← Projects"
                 HorizontalAlignment="Left"
                 Padding="5,0" />
+
+            <TextBlock Text="総作業時間 : " />
+            <TextBlock Text="{Binding TotalWorkingDuration, Converter={StaticResource TimeSpanConverter}}" />
         </StatusBar>
 
         <ListView
