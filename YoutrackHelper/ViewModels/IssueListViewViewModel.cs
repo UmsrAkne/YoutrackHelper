@@ -19,13 +19,14 @@ namespace YoutrackHelper.ViewModels
         private readonly IRegionManager regionManager;
         private readonly IDialogService dialogService;
         private readonly Timer timer;
-        private readonly TimeCounter timeCounter = new ();
+        private readonly TimeCounter timeCounter = new () { TotalTimeTracking = true, };
         private ObservableCollection<IIssue> issues;
         private bool uiEnabled;
         private string temporaryIssueTitle;
         private string temporaryIssueDescription;
         private bool disposed;
         private string projectName = string.Empty;
+        private TimeSpan totalWorkingDuration;
 
         public IssueListViewViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -42,6 +43,12 @@ namespace YoutrackHelper.ViewModels
         public string ProjectName { get => projectName; private set => SetProperty(ref projectName, value); }
 
         public Connector Connector { get; set; }
+
+        public TimeSpan TotalWorkingDuration
+        {
+            get => totalWorkingDuration;
+            set => SetProperty(ref totalWorkingDuration, value);
+        }
 
         public ObservableCollection<IIssue> IssueWrappers
         {
@@ -177,13 +184,15 @@ namespace YoutrackHelper.ViewModels
 
         private void UpdateWorkingDuration(object sender, ElapsedEventArgs e)
         {
+            var now = DateTime.Now;
+            TotalWorkingDuration = timeCounter.GetTotalWorkingDuration(now);
+
             var names = timeCounter.GetTrackingNames().ToList();
             if (!names.Any())
             {
                 return;
             }
 
-            var now = DateTime.Now;
             IssueWrappers
                 .Where(i => names.Contains(i.ShortName))
                 .ToList().ForEach(i => i.UpdateWorkingDuration(now));
