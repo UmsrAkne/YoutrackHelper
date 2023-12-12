@@ -180,7 +180,7 @@
                             </Grid>
 
                             <!--  コメントを表示するビュー  -->
-                            <StackPanel>
+                            <StackPanel Margin="25,0,0,0">
                                 <StackPanel.Style>
                                     <Style TargetType="StackPanel">
                                         <Style.Triggers>
@@ -196,7 +196,7 @@
                                 </StackPanel.Style>
 
                                 <!--  コメント投稿用テキストボックス  -->
-                                <TextBox Text="{Binding TemporaryComment, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox Margin="5,0" Text="{Binding TemporaryComment, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.InputBindings>
                                         <KeyBinding
                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Path=DataContext.PostCommentCommand}"
@@ -210,8 +210,7 @@
                                     Background="Transparent"
                                     BorderThickness="0"
                                     HorizontalContentAlignment="Stretch"
-                                    ItemsSource="{Binding Comments}"
-                                    Margin="25,0,0,0">
+                                    ItemsSource="{Binding Comments}">
 
                                     <ListView.ItemTemplate>
                                         <DataTemplate DataType="{x:Type issues:Comment}">
