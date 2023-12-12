@@ -106,7 +106,7 @@ namespace YoutrackHelper.ViewModels
 
         public DelegateCommand<IIssue> PostCommentCommand => new ((param) =>
         {
-            if (param == null)
+            if (param == null || string.IsNullOrWhiteSpace(param.TemporaryComment))
             {
                 return;
             }
@@ -193,11 +193,15 @@ namespace YoutrackHelper.ViewModels
             await GetIssuesAsync();
         }
 
-        private async Task PostCommentAsync(string projectShortName, string comment)
+        private async Task PostCommentAsync(string issueId, string comment)
         {
-            UiEnabled = false;
-            await Connector.ApplyCommand(projectShortName, "comment", comment);
-            await GetIssuesAsync();
+            await Connector.ApplyCommand(issueId, "comment", comment);
+            var i = await Connector.GetIssue(issueId);
+            var w = IssueWrappers.FirstOrDefault(ii => ii.ShortName == issueId);
+            if (w is IssueWrapper wrapper)
+            {
+                wrapper.SetIssue(i);
+            }
         }
 
         private void UpdateWorkingDuration(object sender, ElapsedEventArgs e)
