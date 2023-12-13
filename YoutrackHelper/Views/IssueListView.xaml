@@ -26,7 +26,7 @@
         <KeyBinding
             Command="{Binding CreateIssueCommand}"
             Key="Enter"
-            Modifiers="Control" />
+            Modifiers="Ctrl+Shift" />
     </UserControl.InputBindings>
 
     <Grid>
@@ -238,6 +238,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
+        <!--  課題投稿周りのビュー  -->
         <StackPanel Grid.Row="2">
             <DockPanel Margin="2">
                 <TextBlock Text="Title :" Width="80" />
@@ -257,7 +258,7 @@
 
             <Button
                 Command="{Binding CreateIssueCommand}"
-                Content="new Issue (Ctrl + Enter)"
+                Content="new Issue (Ctrl + Shift + Enter)"
                 HorizontalAlignment="Right"
                 Margin="3"
                 Padding="5,0" />
