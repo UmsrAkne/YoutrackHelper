@@ -175,7 +175,10 @@ namespace YoutrackHelper.Models
 
             RaisePropertyChanged(nameof(Status));
 
-            Comments = Issue.Comments.ToList();
+            Comments = Issue.Comments
+                .OrderByDescending(c => c.Created)
+                .ToList();
+            
             RaisePropertyChanged(nameof(Comments));
         }
     }
