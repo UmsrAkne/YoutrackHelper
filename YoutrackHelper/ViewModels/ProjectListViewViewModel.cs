@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -14,7 +15,7 @@ namespace YoutrackHelper.ViewModels
     public class ProjectListViewViewModel : BindableBase, INavigationAware
     {
         private readonly IRegionManager regionManager;
-        private List<Project> projects;
+        private List<IProject> projects;
         private string message = string.Empty;
 
         public ProjectListViewViewModel(IRegionManager regionManager)
@@ -32,7 +33,7 @@ namespace YoutrackHelper.ViewModels
             _ = GetProjectsAsync(uri, perm);
         }
 
-        public List<Project> Projects { get => projects; private set => SetProperty(ref projects, value); }
+        public List<IProject> Projects { get => projects; private set => SetProperty(ref projects, value); }
 
         public Connector Connector { get; set; }
 
@@ -71,7 +72,19 @@ namespace YoutrackHelper.ViewModels
         {
             Connector = new Connector(uri, perm);
             await Connector.LoadProjects();
-            Projects = Connector.Projects;
+            var ps = Connector.Projects
+                .Select(p => (IProject)new ProjectWrapper() { Project = p, Name = p.Name, })
+                .ToList();
+
+            Projects = ps;
+
+            foreach (var p in ps)
+            {
+                var issueList = await Connector.GetIssues(p.Name);
+                p.IssueCount = issueList.Count;
+                p.IncompleteIssueCount = issueList.Count(i => !new IssueWrapper(i).Completed);
+            }
+
             Message = Connector.ErrorMessage;
         }
     }

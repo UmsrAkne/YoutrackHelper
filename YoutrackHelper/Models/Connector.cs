@@ -125,5 +125,20 @@ namespace YoutrackHelper.Models
                 ErrorMessage = "接続に失敗しました";
             }
         }
+
+        public async Task<ICollection<Issue>> GetIssues(string projectName)
+        {
+            try
+            {
+                return await Connection.CreateIssuesService().GetIssuesInProject(projectName);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"{e}(Connector : 52)");
+                ErrorMessage = "接続に失敗しました";
+            }
+
+            return null;
+        }
     }
 }
