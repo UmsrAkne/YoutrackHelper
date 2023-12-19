@@ -2,6 +2,7 @@
     x:Class="YoutrackHelper.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <Style TargetType="ListView" x:Key="ListViewStyle">
@@ -19,5 +20,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <system:Double x:Key="BasicFontSize">14.0</system:Double>
+
     </Application.Resources>
 </prism:PrismApplication>
