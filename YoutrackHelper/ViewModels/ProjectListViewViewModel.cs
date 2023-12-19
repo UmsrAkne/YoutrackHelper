@@ -39,7 +39,7 @@ namespace YoutrackHelper.ViewModels
 
         public string Message { get => message; private set => SetProperty(ref message, value); }
 
-        public DelegateCommand<Project> ShowIssueListViewCommand => new ((p) =>
+        public DelegateCommand<IProject> ShowIssueListViewCommand => new ((p) =>
         {
             if (p == null)
             {
@@ -48,7 +48,7 @@ namespace YoutrackHelper.ViewModels
 
             var param = new NavigationParameters
             {
-                { nameof(Project), p },
+                { nameof(Project), p.Project },
                 { nameof(Connector), Connector },
             };
 
