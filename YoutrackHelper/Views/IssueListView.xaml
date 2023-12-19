@@ -30,6 +30,12 @@
     </UserControl.InputBindings>
 
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="{StaticResource BasicFontSize}" />
+            </Style>
+        </Grid.Resources>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -65,6 +71,12 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:IIssue}">
+                    <DataTemplate.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="{StaticResource BasicFontSize}" />
+                        </Style>
+                    </DataTemplate.Resources>
+
                     <ContentControl>
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="MouseDoubleClick">
