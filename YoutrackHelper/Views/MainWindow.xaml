@@ -1,5 +1,5 @@
 ﻿<Window
-    Height="350"
+    Height="Auto"
     Title="{Binding Title}"
     Width="800"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"

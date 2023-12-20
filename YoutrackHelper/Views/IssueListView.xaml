@@ -45,9 +45,12 @@
         <StatusBar Grid.Row="0">
             <Button
                 Command="{Binding ShowProjectListViewCommand}"
-                Content="← Projects"
                 HorizontalAlignment="Left"
-                Padding="5,0" />
+                Padding="5,0">
+                <Button.Content>
+                    <TextBlock FontSize="{StaticResource BasicFontSize}" Text="← Projects" />
+                </Button.Content>
+            </Button>
 
             <TextBlock Text="総作業時間 : " />
             <TextBlock Text="{Binding TotalWorkingDuration, Converter={StaticResource TimeSpanConverter}}" />
@@ -226,6 +229,12 @@
 
                                     <ListView.ItemTemplate>
                                         <DataTemplate DataType="{x:Type issues:Comment}">
+                                            <DataTemplate.Resources>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="FontSize" Value="{StaticResource BasicFontSize}" />
+                                                </Style>
+                                            </DataTemplate.Resources>
+
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition />
@@ -270,10 +279,13 @@
 
             <Button
                 Command="{Binding CreateIssueCommand}"
-                Content="new Issue (Ctrl + Shift + Enter)"
                 HorizontalAlignment="Right"
                 Margin="3"
-                Padding="5,0" />
+                Padding="5,0">
+                <Button.Content>
+                    <TextBlock FontSize="{StaticResource BasicFontSize}" Text="new Issue (Ctrl + Shift + Enter)" />
+                </Button.Content>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>
