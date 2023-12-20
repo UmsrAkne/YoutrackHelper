@@ -135,7 +135,7 @@ namespace YoutrackHelper.Models
             catch (Exception e)
             {
                 Debug.WriteLine($"{e}(Connector : 52)");
-                ErrorMessage = $"{projectName} の接続に失敗しました";
+                ErrorMessage = $"{projectName} への接続に失敗しました";
                 return new List<Issue>();
             }
         }
