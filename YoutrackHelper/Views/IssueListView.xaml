@@ -62,6 +62,7 @@
             ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
             ItemsSource="{Binding IssueWrappers}"
             Style="{StaticResource ListViewStyle}"
+            VirtualizingPanel.ScrollUnit="Pixel"
             x:Name="ListView">
 
             <ListView.InputBindings>
@@ -221,13 +222,14 @@
                                     </TextBox.InputBindings>
                                 </TextBox>
 
-                                <ListView
+                                <!--  コメント表示用リストビュー  -->
+                                <ItemsControl
                                     Background="Transparent"
                                     BorderThickness="0"
                                     HorizontalContentAlignment="Stretch"
                                     ItemsSource="{Binding Comments}">
 
-                                    <ListView.ItemTemplate>
+                                    <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type issues:Comment}">
                                             <DataTemplate.Resources>
                                                 <Style TargetType="TextBlock">
@@ -249,8 +251,8 @@
                                             </Grid>
 
                                         </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </StackPanel>
 
                         </StackPanel>
