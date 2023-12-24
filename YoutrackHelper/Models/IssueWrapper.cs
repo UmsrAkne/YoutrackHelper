@@ -78,6 +78,15 @@ namespace YoutrackHelper.Models
 
         public List<Comment> Comments { get; set; } = new ();
 
+        public List<Comment> RecentComments =>
+            Comments.Count != 0
+                ? Comments.OrderByDescending(c => c.Created)
+                    .Take(DisplayRecentCommentCount)
+                    .ToList()
+                : new List<Comment>();
+
+        public int DisplayRecentCommentCount { get; set; } = 10;
+
         public bool Expanded { get => expanded; set => SetProperty(ref expanded, value); }
 
         public TimeSpan WorkingDuration { get => workingDuration; set => SetProperty(ref workingDuration, value); }
@@ -178,8 +187,9 @@ namespace YoutrackHelper.Models
             Comments = Issue.Comments
                 .OrderByDescending(c => c.Created)
                 .ToList();
-            
+
             RaisePropertyChanged(nameof(Comments));
+            RaisePropertyChanged(nameof(RecentComments));
         }
     }
 }
