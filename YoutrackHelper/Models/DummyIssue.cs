@@ -23,6 +23,8 @@ namespace YoutrackHelper.Models
 
         public List<Comment> RecentComments { get; }
 
+        public int DisplayRecentCommentCount { get; set; }
+
         public bool Expanded { get; set; }
 
         public TimeSpan WorkingDuration { get; set; }

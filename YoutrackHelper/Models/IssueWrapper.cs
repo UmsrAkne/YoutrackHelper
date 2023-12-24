@@ -81,9 +81,11 @@ namespace YoutrackHelper.Models
         public List<Comment> RecentComments =>
             Comments.Count != 0
                 ? Comments.OrderByDescending(c => c.Created)
-                    .Take(10)
+                    .Take(DisplayRecentCommentCount)
                     .ToList()
                 : new List<Comment>();
+
+        public int DisplayRecentCommentCount { get; set; } = 10;
 
         public bool Expanded { get => expanded; set => SetProperty(ref expanded, value); }
 
