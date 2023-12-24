@@ -227,7 +227,7 @@
                                     Background="Transparent"
                                     BorderThickness="0"
                                     HorizontalContentAlignment="Stretch"
-                                    ItemsSource="{Binding Comments}">
+                                    ItemsSource="{Binding RecentComments}">
 
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type issues:Comment}">

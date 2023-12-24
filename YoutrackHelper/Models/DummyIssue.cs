@@ -21,6 +21,8 @@ namespace YoutrackHelper.Models
 
         public List<Comment> Comments { get; set; } = new ();
 
+        public List<Comment> RecentComments { get; }
+
         public bool Expanded { get; set; }
 
         public TimeSpan WorkingDuration { get; set; }
