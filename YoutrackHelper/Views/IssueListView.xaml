@@ -149,7 +149,7 @@
                                         Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ChangeStatusCommand}"
                                         CommandParameter="{Binding}"
                                         Margin="4,0"
-                                        Width="50">
+                                        Width="70">
                                         <ToggleButton.Style>
                                             <Style TargetType="ToggleButton">
                                                 <Style.Triggers>
