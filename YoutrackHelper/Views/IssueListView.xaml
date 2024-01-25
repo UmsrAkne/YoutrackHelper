@@ -218,7 +218,11 @@
                                 </StackPanel.Style>
 
                                 <!--  コメント投稿用テキストボックス  -->
-                                <TextBox Margin="0,2" Text="{Binding TemporaryComment, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox
+                                    Margin="0,2"
+                                    Padding="1"
+                                    FontSize="{StaticResource BasicFontSize}"
+                                    Text="{Binding TemporaryComment, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.InputBindings>
                                         <KeyBinding
                                             Key="Enter"
