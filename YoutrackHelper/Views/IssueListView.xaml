@@ -1,17 +1,17 @@
 <UserControl
-    IsEnabled="{Binding UiEnabled}"
-    d:DataContext="{d:DesignInstance viewModels:IssueListViewViewModel}"
-    d:DesignHeight="300"
-    mc:Ignorable="d"
     x:Class="YoutrackHelper.Views.IssueListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:issues="clr-namespace:YouTrackSharp.Issues;assembly=YouTrackSharp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:YoutrackHelper.Models"
     xmlns:viewModels="clr-namespace:YoutrackHelper.ViewModels"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    d:DataContext="{d:DesignInstance viewModels:IssueListViewViewModel}"
+    d:DesignHeight="300"
+    IsEnabled="{Binding UiEnabled}"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <models:DateTimeConverter x:Key="DateTimeConverter" />
         <models:TimeSpanConverter x:Key="TimeSpanConverter" />
@@ -19,13 +19,13 @@
 
     <UserControl.InputBindings>
         <KeyBinding
-            Command="{Binding UpdateIssueListCommand}"
             Key="R"
+            Command="{Binding UpdateIssueListCommand}"
             Modifiers="Control" />
 
         <KeyBinding
-            Command="{Binding CreateIssueCommand}"
             Key="Enter"
+            Command="{Binding CreateIssueCommand}"
             Modifiers="Ctrl+Shift" />
     </UserControl.InputBindings>
 
@@ -44,9 +44,9 @@
 
         <StatusBar Grid.Row="0">
             <Button
-                Command="{Binding ShowProjectListViewCommand}"
+                Padding="5,0"
                 HorizontalAlignment="Left"
-                Padding="5,0">
+                Command="{Binding ShowProjectListViewCommand}">
                 <Button.Content>
                     <TextBlock FontSize="{StaticResource BasicFontSize}" Text="← Projects" />
                 </Button.Content>
@@ -57,19 +57,19 @@
         </StatusBar>
 
         <ListView
+            x:Name="ListView"
             Grid.Row="1"
             HorizontalContentAlignment="Stretch"
             ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
             ItemsSource="{Binding IssueWrappers}"
             Style="{StaticResource ListViewStyle}"
-            VirtualizingPanel.ScrollUnit="Pixel"
-            x:Name="ListView">
+            VirtualizingPanel.ScrollUnit="Pixel">
 
             <ListView.InputBindings>
                 <KeyBinding
+                    Key="I"
                     Command="{Binding ShowIssueDetailDialogCommand}"
                     CommandParameter="{Binding ElementName=ListView, Path=SelectedItem}"
-                    Key="I"
                     Modifiers="Control" />
             </ListView.InputBindings>
 
@@ -112,9 +112,9 @@
 
                                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                                     <CheckBox
-                                        IsChecked="{Binding Completed}"
                                         Margin="0,1,4,0"
-                                        VerticalAlignment="Center">
+                                        VerticalAlignment="Center"
+                                        IsChecked="{Binding Completed}">
 
                                         <CheckBox.Style>
                                             <Style TargetType="CheckBox">
@@ -141,15 +141,15 @@
                                     HorizontalAlignment="Right"
                                     Orientation="Horizontal">
                                     <TextBlock
+                                        Width="50"
                                         Margin="4,0"
-                                        Text="{Binding ShortName}"
-                                        Width="50" />
+                                        Text="{Binding ShortName}" />
 
                                     <ToggleButton
-                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ChangeStatusCommand}"
-                                        CommandParameter="{Binding}"
+                                        Width="70"
                                         Margin="4,0"
-                                        Width="70">
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.ChangeStatusCommand}"
+                                        CommandParameter="{Binding}">
                                         <ToggleButton.Style>
                                             <Style TargetType="ToggleButton">
                                                 <Style.Triggers>
@@ -195,7 +195,7 @@
                                         <TextBlock Text="{Binding Status}" />
                                     </ToggleButton>
 
-                                    <TextBlock Text="{Binding WorkingDuration, Converter={StaticResource TimeSpanConverter}}" Width="80" />
+                                    <TextBlock Width="80" Text="{Binding WorkingDuration, Converter={StaticResource TimeSpanConverter}}" />
 
                                     <TextBlock Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
                                 </StackPanel>
@@ -221,18 +221,18 @@
                                 <TextBox Margin="5,0" Text="{Binding TemporaryComment, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.InputBindings>
                                         <KeyBinding
+                                            Key="Enter"
                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Path=DataContext.PostCommentCommand}"
                                             CommandParameter="{Binding}"
-                                            Key="Enter"
                                             Modifiers="Control" />
                                     </TextBox.InputBindings>
                                 </TextBox>
 
                                 <!--  コメント表示用リストビュー  -->
                                 <ItemsControl
+                                    HorizontalContentAlignment="Stretch"
                                     Background="Transparent"
                                     BorderThickness="0"
-                                    HorizontalContentAlignment="Stretch"
                                     ItemsSource="{Binding RecentComments}">
 
                                     <ItemsControl.ItemTemplate>
@@ -270,7 +270,7 @@
         <!--  課題投稿周りのビュー  -->
         <StackPanel Grid.Row="2">
             <DockPanel Margin="2">
-                <TextBlock Text="Title :" Width="80" />
+                <TextBlock Width="80" Text="Title :" />
                 <TextBox
                     AcceptsReturn="False"
                     DockPanel.Dock="Right"
@@ -278,7 +278,7 @@
             </DockPanel>
 
             <DockPanel Margin="2">
-                <TextBlock Text="Description :" Width="80" />
+                <TextBlock Width="80" Text="Description :" />
                 <TextBox
                     AcceptsReturn="True"
                     DockPanel.Dock="Right"
@@ -286,10 +286,10 @@
             </DockPanel>
 
             <Button
-                Command="{Binding CreateIssueCommand}"
-                HorizontalAlignment="Right"
                 Margin="3"
-                Padding="5,0">
+                Padding="5,0"
+                HorizontalAlignment="Right"
+                Command="{Binding CreateIssueCommand}">
                 <Button.Content>
                     <TextBlock FontSize="{StaticResource BasicFontSize}" Text="new Issue (Ctrl + Shift + Enter)" />
                 </Button.Content>
