@@ -2,6 +2,7 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using YoutrackHelper.Models;
 using YoutrackHelper.Views;
 
 namespace YoutrackHelper.ViewModels
@@ -16,6 +17,7 @@ namespace YoutrackHelper.ViewModels
         public MainWindowViewModel(IRegionManager regionManager)
         {
             this.regionManager = regionManager;
+            Logger.WriteMessageToFile("アプリを起動しました");
         }
 
         // ReSharper disable once MemberCanBeMadeStatic.Global
