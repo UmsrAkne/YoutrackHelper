@@ -189,12 +189,14 @@ namespace YoutrackHelper.ViewModels
         private async Task PostIssue(string projectShortName, string title, string description)
         {
             UiEnabled = false;
+            Logger.WriteMessageToFile($"課題を新規作成 {projectShortName}, {title}, {description}");
             await Connector.CreateIssue(projectShortName, title, description);
             await GetIssuesAsync();
         }
 
         private async Task PostCommentAsync(string issueId, string comment)
         {
+            Logger.WriteMessageToFile($"コメントを投稿 {issueId}, {comment}");
             await Connector.ApplyCommand(issueId, "comment", comment);
             var i = await Connector.GetIssue(issueId);
             var w = IssueWrappers.FirstOrDefault(ii => ii.ShortName == issueId);

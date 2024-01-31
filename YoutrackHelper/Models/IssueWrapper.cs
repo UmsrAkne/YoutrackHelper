@@ -113,6 +113,8 @@ namespace YoutrackHelper.Models
 
         public async Task ToggleStatus(Connector connector, TimeCounter counter)
         {
+            Logger.WriteMessageToFile($"課題の状態を変更 {ShortName}, 現在の状態 : {Status}");
+
             if (Status == "未完了")
             {
                 counter.StartTimeTracking(shortName, DateTime.Now);
@@ -148,6 +150,7 @@ namespace YoutrackHelper.Models
 
         public async Task Complete(Connector connector, TimeCounter counter)
         {
+            Logger.WriteMessageToFile($"課題を完了 {ShortName}");
             var comment = string.Empty;
             if (counter.IsTrackingNameRegistered(ShortName))
             {
