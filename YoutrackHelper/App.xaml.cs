@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Prism.Ioc;
 using Prism.Modularity;
+using YoutrackHelper.Models;
 using YoutrackHelper.ViewModels;
 using YoutrackHelper.Views;
 
@@ -26,6 +27,14 @@ namespace YoutrackHelper
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<YoutrackHelperModule>();
+        }
+        
+        protected override void OnExit(ExitEventArgs e)
+        {
+            Logger.WriteMessageToFile("アプリが終了しました");
+            
+            // アプリが終了するときの処理
+            base.OnExit(e);
         }
     }
 }
