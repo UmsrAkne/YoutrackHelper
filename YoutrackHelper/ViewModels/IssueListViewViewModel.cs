@@ -47,7 +47,7 @@ namespace YoutrackHelper.ViewModels
         public TimeSpan TotalWorkingDuration
         {
             get => totalWorkingDuration;
-            set => SetProperty(ref totalWorkingDuration, value);
+            private set => SetProperty(ref totalWorkingDuration, value);
         }
 
         public ObservableCollection<IIssue> IssueWrappers
