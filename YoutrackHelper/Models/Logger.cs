@@ -3,7 +3,7 @@ using System.IO;
 
 namespace YoutrackHelper.Models
 {
-    public class Logger
+    public static class Logger
     {
         public static void WriteMessageToFile(string message)
         {
