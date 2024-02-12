@@ -197,6 +197,8 @@
 
                                     <TextBlock Width="80" Text="{Binding WorkingDuration, Converter={StaticResource TimeSpanConverter}}" />
 
+                                    <TextBlock Width="60" Text="{Binding RegisteredWorkingDuration, Converter={StaticResource TimeSpanConverter}}" />
+
                                     <TextBlock Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
                                 </StackPanel>
                             </Grid>
