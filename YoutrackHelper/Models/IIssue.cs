@@ -31,6 +31,8 @@ namespace YoutrackHelper.Models
 
         public TimeSpan WorkingDuration { get; set; }
 
+        public TimeSpan RegisteredWorkingDuration { get;  }
+
         public DelegateCommand ChangeVisibilityCommand { get; }
 
         public void UpdateWorkingDuration(DateTime dateTime);

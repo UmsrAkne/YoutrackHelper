@@ -93,6 +93,22 @@ namespace YoutrackHelper.Models
 
         public TimeSpan WorkingDuration { get => workingDuration; set => SetProperty(ref workingDuration, value); }
 
+        public TimeSpan RegisteredWorkingDuration
+        {
+            get
+            {
+                var f = Issue?.Fields.FirstOrDefault(f => f.Name == "経過時間");
+                var list = (List<string>)f?.Value;
+                var val = list?.FirstOrDefault();
+                if (val == null || !int.TryParse(val, out var durationMinute))
+                {
+                    return TimeSpan.Zero;
+                }
+
+                return TimeSpan.FromMinutes(durationMinute);
+            }
+        }
+
         public DelegateCommand ChangeVisibilityCommand => new (() =>
         {
             Expanded = !Expanded;
