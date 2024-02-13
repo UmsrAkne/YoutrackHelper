@@ -10,9 +10,10 @@ namespace YoutrackHelper.Models
         {
             if (value != null)
             {
+                var format = (string)parameter ?? @"hh\:mm\:ss";
                 var ts = (TimeSpan)value;
                 return ts != TimeSpan.Zero
-                    ? TimeSpan.FromSeconds(Math.Floor(((TimeSpan)value).TotalSeconds)).ToString(@"hh\:mm\:ss")
+                    ? TimeSpan.FromSeconds(Math.Floor(((TimeSpan)value).TotalSeconds)).ToString(format)
                     : string.Empty;
             }
 
