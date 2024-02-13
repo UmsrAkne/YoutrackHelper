@@ -195,9 +195,11 @@
                                         <TextBlock Text="{Binding Status}" />
                                     </ToggleButton>
 
+                                    <!--  現在の作業時間を表示  -->
                                     <TextBlock Width="80" Text="{Binding WorkingDuration, Converter={StaticResource TimeSpanConverter}}" />
 
-                                    <TextBlock Width="60" Text="{Binding RegisteredWorkingDuration, Converter={StaticResource TimeSpanConverter}}" />
+                                    <!--  登録済みの作業時間の合計を表示  -->
+                                    <TextBlock Width="40" Text="{Binding RegisteredWorkingDuration, Converter={StaticResource TimeSpanConverter}, ConverterParameter='hh\\:mm'}" />
 
                                     <TextBlock Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}" />
                                 </StackPanel>
