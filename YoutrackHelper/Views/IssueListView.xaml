@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <models:DateTimeConverter x:Key="DateTimeConverter" />
         <models:TimeSpanConverter x:Key="TimeSpanConverter" />
+        <models:TimeSpanConverterEx x:Key="TimeSpanConverterEx" />
     </UserControl.Resources>
 
     <UserControl.InputBindings>
@@ -277,6 +278,15 @@
 
         <!--  課題投稿周りのビュー  -->
         <StackPanel Grid.Row="2">
+            <StackPanel
+                Margin="4"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <TextBlock Text="登録済み作業時間合計 : " />
+                <TextBlock Text="{Binding TotalRegisteredWorkingDuration, Converter={StaticResource TimeSpanConverterEx}}" />
+
+            </StackPanel>
+
             <DockPanel Margin="2">
                 <TextBlock Width="80" Text="Title :" />
                 <TextBox

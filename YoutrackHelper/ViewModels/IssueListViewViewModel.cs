@@ -27,6 +27,7 @@ namespace YoutrackHelper.ViewModels
         private bool disposed;
         private string projectName = string.Empty;
         private TimeSpan totalWorkingDuration;
+        private TimeSpan totalRegisteredWorkingDuration;
 
         public IssueListViewViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -50,10 +51,20 @@ namespace YoutrackHelper.ViewModels
             private set => SetProperty(ref totalWorkingDuration, value);
         }
 
+        public TimeSpan TotalRegisteredWorkingDuration
+        {
+            get => totalRegisteredWorkingDuration;
+            private set => SetProperty(ref totalRegisteredWorkingDuration, value);
+        }
+
         public ObservableCollection<IIssue> IssueWrappers
         {
             get => issues;
-            private set => SetProperty(ref issues, value);
+            private set
+            {
+                TotalRegisteredWorkingDuration = new TimeSpan(value.Sum(w => w.RegisteredWorkingDuration.Ticks));
+                SetProperty(ref issues, value);
+            }
         }
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
