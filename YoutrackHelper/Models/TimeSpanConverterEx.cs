@@ -13,7 +13,7 @@ namespace YoutrackHelper.Models
                 var ts = (TimeSpan)value;
                 var dayStr = ts.TotalDays >= 1 ? $"{(int)ts.TotalDays}day " : string.Empty;
                 return ts != TimeSpan.Zero
-                    ? $"{dayStr}{(int)ts.TotalHours}h {ts.Minutes}min"
+                    ? $"{dayStr}{ts.Hours}h {ts.Minutes}min"
                     : string.Empty;
             }
 
