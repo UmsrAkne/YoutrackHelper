@@ -252,7 +252,7 @@
                                                 </Style>
                                             </DataTemplate.Resources>
 
-                                            <Grid>
+                                            <Grid Margin="1,2">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition />
                                                     <ColumnDefinition Width="Auto" />
