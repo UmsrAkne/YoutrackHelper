@@ -292,6 +292,7 @@
                 <TextBox
                     AcceptsReturn="False"
                     DockPanel.Dock="Right"
+                    FontSize="{StaticResource BasicFontSize}"
                     Text="{Binding TemporaryIssueTitle, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
@@ -300,6 +301,7 @@
                 <TextBox
                     AcceptsReturn="True"
                     DockPanel.Dock="Right"
+                    FontSize="{StaticResource BasicFontSize}"
                     Text="{Binding TemporaryIssueDescription, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
