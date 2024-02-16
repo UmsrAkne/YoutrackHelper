@@ -93,6 +93,12 @@ namespace YoutrackHelper.ViewModels
         {
             if (param is IssueWrapper w)
             {
+                if (w.Status == "未完了")
+                {
+                    // これから作業を開始ということなので、課題を展開してコメント欄を表示する。
+                    w.Expanded = true;
+                }
+
                 _ = w.ToggleStatus(Connector, timeCounter);
             }
         });
