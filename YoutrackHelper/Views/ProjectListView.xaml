@@ -21,6 +21,7 @@
 
         <ListView
             Grid.Row="0"
+            HorizontalContentAlignment="Stretch"
             ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
             ItemsSource="{Binding Projects}"
             Style="{StaticResource ListViewStyle}">
@@ -34,7 +35,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
 
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Background="Transparent" Orientation="Horizontal">
 
                             <StackPanel.Resources>
                                 <Style TargetType="TextBlock">
