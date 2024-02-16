@@ -129,6 +129,13 @@ namespace YoutrackHelper.Models
             WorkingDuration = dateTime - StartedAt;
         }
 
+        /// <summary>
+        /// この課題の状態を変更します。
+        /// 現在の実装では、状態の変更は 未完了 と 作業中 の２つの間で切り替わります。
+        /// </summary>
+        /// <param name="connector">Youtrack サーバーに接続するための Connector</param>
+        /// <param name="counter">作業時間を記録中の TimeCounter</param>
+        /// <returns>Task</returns>
         public async Task ToggleStatus(Connector connector, TimeCounter counter)
         {
             Logger.WriteMessageToFile($"課題の状態を変更 {FullName} 現在の状態 : {Status}");
