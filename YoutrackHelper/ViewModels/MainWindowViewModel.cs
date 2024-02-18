@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -33,6 +35,19 @@ namespace YoutrackHelper.ViewModels
             var region = regionManager.Regions["ContentRegion"];
             region.NavigationService.Navigated += UpdateTitle;
             executed = true;
+        });
+
+        public DelegateCommand OpenLogCommand => new DelegateCommand(() =>
+        {
+            if (!File.Exists("log.txt"))
+            {
+                return;
+            }
+
+            using var ps1 = new Process();
+            ps1.StartInfo.UseShellExecute = true;
+            ps1.StartInfo.FileName = "log.txt";
+            ps1.Start();
         });
 
         private void UpdateTitle(object sender, RegionNavigationEventArgs regionNavigationEventArgs)
