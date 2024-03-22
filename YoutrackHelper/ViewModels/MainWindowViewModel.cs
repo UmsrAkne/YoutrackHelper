@@ -13,7 +13,7 @@ namespace YoutrackHelper.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private readonly IRegionManager regionManager;
-        private string title;
+        private string title = "Projects";
         private bool executed;
 
         public MainWindowViewModel(IRegionManager regionManager)
@@ -23,7 +23,19 @@ namespace YoutrackHelper.ViewModels
         }
 
         // ReSharper disable once MemberCanBeMadeStatic.Global
-        public string Title { get => title; set => SetProperty(ref title, value); }
+        public string Title
+        {
+            get => title;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    value = "Projects";
+                }
+
+                SetProperty(ref title, value);
+            }
+        }
 
         public DelegateCommand BindTitleCommand => new (() =>
         {
